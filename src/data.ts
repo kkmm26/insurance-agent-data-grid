@@ -1,158 +1,73 @@
-interface Policy {
+export type PolicyType = "Motor" | "Fire" | "Life" | "Health" | "Travel";
+export type PolicyStatus = "Active" | "Expired";
+export type CommissionStatus = "Pending" | "Paid";
+export type CompanyName = "AYA SOMPO" | "GGI" | "YOUNG" | "IKBZ" | "FNI";
+export type Policy = {
   id: number;
   clientName: string;
-  type: string;
-  insuranceCompany: string;
+  clientContact: string;
+  policyType: PolicyType;
+  companyName: CompanyName;
   policyNumber: string;
-  policyStatus: string;
-  sumInsured: string;
+  policyStatus: PolicyStatus;
+  sumInsured: number;
+  startDate: string;
   expiryDate: string;
-  commissionStatus: string;
-  commission: string;
-  remarks: string;
+  commissionStatus: CommissionStatus;
+  commissionAmount: number;
+  commissionRate: number;
+  remarks?: string;
 }
+
+export const policyTypes: PolicyType[] = ["Motor", "Fire", "Life", "Health", "Travel"];
+export const policyStatuses: PolicyStatus[] = ["Active", "Expired"];
+export const commissionStatuses: CommissionStatus[] = ["Pending", "Paid"];
+export const companyNames: CompanyName[] = ["AYA SOMPO", "GGI", "YOUNG", "IKBZ", "FNI"];
+
 export const policies: Policy[] = [
     {
-        id: 40,
+        id: 1,
         clientName: "John Doe",
-        type: "Car",
-        insuranceCompany: "AllState Insurance",
-        policyNumber: "POL12345",
-        policyStatus: "Expired",
-        sumInsured: "$20,000",
+        clientContact: "08123456789",
+        policyType: "Motor",
+        companyName: "AYA SOMPO",
+        policyNumber: "1234567890",
+        policyStatus: "Active",
+        sumInsured: 20000,
+        startDate: "2024-05-15",
         expiryDate: "2024-05-15",
-        commissionStatus: "Recieved",
-        commission: "31 Ft (10%)",
-        remarks: "",
-    },
-    {
-        id: 40,
-        clientName: "John Doe",
-        type: "Car",
-        insuranceCompany: "AllState Insurance",
-        policyNumber: "POL12345",
-        policyStatus: "Expired",
-        sumInsured: "$20,000",
-        expiryDate: "2024-05-15",
-        commissionStatus: "Recieved",
-        commission: "31 Ft (10%)",
-        remarks: "",
-    },
-    {
-        id: 40,
-        clientName: "John Doe",
-        type: "Car",
-        insuranceCompany: "AllState Insurance",
-        policyNumber: "POL12345",
-        policyStatus: "Expired",
-        sumInsured: "$20,000",
-        expiryDate: "2024-05-15",
-        commissionStatus: "Recieved",
-        commission: "31 Ft (10%)",
-        remarks: "",
-    },
-    {
-        id: 40,
-        clientName: "John Doe",
-        type: "Car",
-        insuranceCompany: "AllState Insurance",
-        policyNumber: "POL12345",
-        policyStatus: "Expired",
-        sumInsured: "$20,000",
-        expiryDate: "2024-05-15",
-        commissionStatus: "Recieved",
-        commission: "31 Ft (10%)",
-        remarks: "",
-    },
-    {
-        id: 40,
-        clientName: "John Doe",
-        type: "Car",
-        insuranceCompany: "AllState Insurance",
-        policyNumber: "POL12345",
-        policyStatus: "Expired",
-        sumInsured: "$20,000",
-        expiryDate: "2024-05-15",
-        commissionStatus: "Recieved",
-        commission: "31 Ft (10%)",
-        remarks: "",
-    },
-    {
-        id: 40,
-        clientName: "John Doe",
-        type: "Car",
-        insuranceCompany: "AllState Insurance",
-        policyNumber: "POL12345",
-        policyStatus: "Expired",
-        sumInsured: "$20,000",
-        expiryDate: "2024-05-15",
-        commissionStatus: "Recieved",
-        commission: "31 Ft (10%)",
-        remarks: "",
-    },
-    {
-        id: 40,
-        clientName: "John Doe",
-        type: "Car",
-        insuranceCompany: "AllState Insurance",
-        policyNumber: "POL12345",
-        policyStatus: "Expired",
-        sumInsured: "$20,000",
-        expiryDate: "2024-05-15",
-        commissionStatus: "Recieved",
-        commission: "31 Ft (10%)",
-        remarks: "",
-    },
-    {
-        id: 65,
-        clientName: "Jane Smith",
-        type: "Health",
-        insuranceCompany: "HealthGuard",
-        policyNumber: "POL67890",
-        policyStatus: "Pending",
-        sumInsured: "$50,000",
-        expiryDate: "2023-11-30",
         commissionStatus: "Pending",
-        commission: "",
-        remarks: "",
+        commissionAmount: 1000,
+        commissionRate: 10,
     },
     {
-        id: 74,
-        clientName: "Michael Johnson",
-        type: "Fire",
-        insuranceCompany: "SafeHome Insurance",
-        policyNumber: "POL54321",
-        policyStatus: "",
-        sumInsured: "$100,000",
-        expiryDate: "2025-01-20",
-        commissionStatus: "",
-        commission: "31 Ft (10%)",
-        remarks: "",
+        id: 2,
+        clientName: "Jane Doe",
+        clientContact: "08123456789",
+        policyType: "Motor",
+        companyName: "IKBZ",
+        policyNumber: "1234567890",
+        policyStatus: "Expired",
+        sumInsured: 20000,
+        startDate: "2024-05-15",
+        expiryDate: "2024-05-15",
+        commissionStatus: "Paid",
+        commissionAmount: 1000,
+        commissionRate: 10,
     },
     {
-        id: 21,
-        clientName: "Emily Brown",
-        type: "Car",
-        insuranceCompany: "DriveSafe Insurance",
-        policyNumber: "POL98765",
-        policyStatus: "",
-        sumInsured: "$15,000",
-        expiryDate: "2024-08-10",
-        commissionStatus: "",
-        commission: "",
-        remarks: "",
-    },
-    {
-        id: 96,
-        clientName: "David Wilson",
-        type: "Health",
-        insuranceCompany: "WellCare Insurance",
-        policyNumber: "POL24680",
-        policyStatus: "",
-        sumInsured: "$30,000",
-        expiryDate: "2023-12-01",
-        commissionStatus: "",
-        commission: "",
-        remarks: "",
+        id: 3,
+        clientName: "John Doe",
+        clientContact: "08123456789",
+        policyType: "Motor",
+        companyName: "YOUNG",
+        policyNumber: "1234567890",
+        policyStatus: "Active",
+        sumInsured: 20000,
+        startDate: "2024-05-15",
+        expiryDate: "2024-05-15",
+        commissionStatus: "Paid",
+        commissionAmount: 1000,
+        commissionRate: 10,
     },
 ];

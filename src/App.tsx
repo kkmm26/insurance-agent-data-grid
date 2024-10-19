@@ -1,13 +1,5 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
+import { columns } from "./components/columns";
 import { policies } from "./data";
 import DateFilterRow from "./components/DateFilterRow";
 import FilterControlsRow from "./components/FilterControlsRow";
@@ -28,7 +20,7 @@ export default function Dashboard() {
 
                 <FilterControlsRow />
 
-                <PolicyTable />
+                <PolicyTable columns={columns} data={policies} />
             </div>
         </DateProvider>
     );

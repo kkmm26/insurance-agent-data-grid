@@ -6,6 +6,8 @@ import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
 import { useState } from "react";
 
+
+
 const initialColumns = [
     { label: "Client Name", value: "clientName", selected: true },
     { label: "Policy Number", value: "policyNumber", selected: true },

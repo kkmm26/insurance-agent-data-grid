@@ -1,6 +1,4 @@
-import {  SlidersHorizontal } from "lucide-react";
 import { Input } from "./ui/input";
-import { Button } from "./ui/button";
 import FilterOptions from "./FilterOptions";
 import ExpirationDateFilter from "./ExpirationDateFilter";
 import ComissionStatusFilter from "./ComissionStatusFilter";

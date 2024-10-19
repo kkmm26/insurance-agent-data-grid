@@ -8,20 +8,16 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Filter } from "lucide-react";
-
-
-
+import {  policyTypes, companyNames } from "@/data"; // Import types from data.ts
 
 const filterOptions = {
-    policyType: ["Car", "Fire", "Health"],
-    companyName: ["AYA SOMPO", "GGI", "YOUNG", "IKBZ", "FNI"],
+    policyType: policyTypes,
+    companyName: companyNames,
 };
 
 type FilterCategory = "policyType" | "companyName";
 
 type FilterState = Record<FilterCategory, Record<string, boolean>>;
-
-
 
 export default function FilterComponent() {
     const [filters, setFilters] = useState<FilterState>({
@@ -29,10 +25,7 @@ export default function FilterComponent() {
         companyName: {},
     });
 
-    const handleCheckboxChange = (
-        category: FilterCategory,
-        option: string
-    ) => {
+    const handleCheckboxChange = (category: FilterCategory, option: string) => {
         setFilters((prev) => ({
             ...prev,
             [category]: {
@@ -48,8 +41,6 @@ export default function FilterComponent() {
             companyName: {},
         });
     };
-
-
 
     return (
         <Popover>
@@ -71,9 +62,14 @@ export default function FilterComponent() {
                                 >
                                     <Checkbox
                                         id={`policyType-${option}`}
-                                        checked={filters.policyType[option] || false}
+                                        checked={
+                                            filters.policyType[option] || false
+                                        }
                                         onCheckedChange={() =>
-                                            handleCheckboxChange("policyType", option)
+                                            handleCheckboxChange(
+                                                "policyType",
+                                                option
+                                            )
                                         }
                                     />
                                     <label

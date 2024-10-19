@@ -24,7 +24,7 @@ const options = [
 ];
 
 function ExpirationDateFilter() {
-    const [expirationDate, setExpirationDate] = useState<string | null>(null);
+    const [expirationDate, setExpirationDate] = useState<string>("All");
 
     return (
         <DropdownMenu>
@@ -33,7 +33,7 @@ function ExpirationDateFilter() {
                     <ChevronDown className="h-4 w-4" /> Expired Within:{" "}
                     {expirationDate === "7 days" && <span className="font-bold text-red-500">7 days</span>}
                     {expirationDate === "1 month" && <span className="font-bold text-green-500">1 month</span>}
-                    {expirationDate === "All" && <span className="font-bold text-blue-500">None</span>}
+                    {expirationDate === "All" && <span className="font-bold text-blue-500">All</span>}
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
