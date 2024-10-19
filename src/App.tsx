@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { columns } from "./components/columns";
+import { columns } from "./components/Columns";
 import { policies } from "./data";
 import DateFilterRow from "./components/DateFilterRow";
 import FilterControlsRow from "./components/FilterControlsRow";
