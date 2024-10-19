@@ -18,8 +18,6 @@ export default function Dashboard() {
 
                 <DateFilterRow />
 
-                <FilterControlsRow />
-
                 <PolicyTable columns={columns} data={policies} />
             </div>
         </DateProvider>

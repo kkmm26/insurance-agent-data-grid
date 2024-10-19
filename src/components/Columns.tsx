@@ -2,11 +2,15 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { Policy } from "../data";
 import { calculateCommissionAmount, cn, formatCurrency } from "@/lib/utils";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
-import { MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
 import { Checkbox } from "./ui/checkbox";
-
 
 export const columns: ColumnDef<Policy>[] = [
     {
@@ -80,14 +84,41 @@ export const columns: ColumnDef<Policy>[] = [
     },
     {
         accessorKey: "sumInsured",
-        header: "Sum Insured",
+        header: ({column}) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Sum Insured
+                    <ArrowUpDown className="w-4 h-4" />
+                </Button>
+            );
+        },
         cell: ({ row }) => {
-            return formatCurrency(row.original.sumInsured);
+            return (
+                <div className="text-right">{formatCurrency(row.original.sumInsured)}</div>
+            );
         },
     },
     {
         accessorKey: "expiryDate",
-        header: "Expiry Date",
+        header: ({column}) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === "asc")
+                    }
+                >
+                    Expiry Date
+                    <ArrowUpDown className="w-4 h-4" />
+                </Button>
+            );
+        },
+        cell: ({ row }) => {
+            return <div className="text-right">{row.original.expiryDate}</div>;
+        },
     },
     {
         accessorKey: "commissionStatus",
@@ -110,19 +141,47 @@ export const columns: ColumnDef<Policy>[] = [
     },
     {
         accessorKey: "commissionAmount",
-        header: "Commission Amount",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === "asc")
+                    }
+                >
+                    Commission Amount
+                    <ArrowUpDown className="w-4 h-4" />
+                </Button>
+            );
+        },
         cell: ({ row }) => {
             const commissionAmount = calculateCommissionAmount(
                 row.original.sumInsured
             );
-            return formatCurrency(commissionAmount);
+            return (
+                <div className="text-right">
+                    {formatCurrency(commissionAmount)}
+                </div>
+            );
         },
     },
     {
         accessorKey: "commissionRate",
-        header: "Commission Rate",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Commission Rate
+                    <ArrowUpDown className="w-4 h-4" />
+                </Button>
+            );
+        },
         cell: ({ row }) => {
-            return `${row.original.commissionRate}%`;
+            return (
+                <div className="text-center">{`${row.original.commissionRate}%`}</div>
+            );
         },
     },
     {
@@ -132,7 +191,7 @@ export const columns: ColumnDef<Policy>[] = [
     {
         id: "actions",
         enableHiding: false,
-        
+
         cell: ({ row }) => {
             return (
                 <DropdownMenu>

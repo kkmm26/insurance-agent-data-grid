@@ -4,6 +4,10 @@ import {
     getCoreRowModel,
     getPaginationRowModel,
     useReactTable,
+    SortingState,
+    getSortedRowModel,
+    getFilteredRowModel,
+    ColumnFiltersState,
 } from "@tanstack/react-table";
 import {
     Table,
@@ -21,7 +25,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from "./ui/select";
-
+import { useState } from "react";
+import FilterControlsRow from "./FilterControlsRow";
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
@@ -31,15 +36,27 @@ function PolicyTable<TData, TValue>({
     columns,
     data,
 }: DataTableProps<TData, TValue>) {
+    const [sorting, setSorting] = useState<SortingState>([]);
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
     const table = useReactTable({
         columns,
         data,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        onSortingChange: setSorting,
+        onColumnFiltersChange: setColumnFilters,
+        state: {
+            sorting,
+            columnFilters,
+        },
     });
 
     return (
         <div>
+            <FilterControlsRow table={table} />
             <div>
                 <Table>
                     <TableHeader>

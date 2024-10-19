@@ -1,78 +1,143 @@
-import { createContext, useState, useMemo } from "react";
+import { createContext, useReducer, useMemo } from "react";
+import { getCurrentMonth, getCurrentYear, nextMonth, previousMonth } from "@/lib/utils";
 
-
-interface DateContextType {
-  startMonth: string;
-  startYear: string;
-  endMonth: string;
-  endYear: string;
-  decreaseStartMonth: () => void;
-  increaseStartMonth: () => void;
-  decreaseStartYear: () => void;
-  increaseStartYear: () => void;
-  decreaseEndMonth: () => void;
-  increaseEndMonth: () => void;
-  decreaseEndYear: () => void;
-  increaseEndYear: () => void;
-  toCurrentMonth: () => void;
-  toCurrentYear: () => void;
+interface DateState {
+    startMonth: string;
+    startYear: number;
+    endMonth: string;
+    endYear: number;
 }
 
-const initialDateContext: DateContextType = {
-  startMonth: "Jan",
-  startYear: "2023",
-  endMonth: "Oct",
-  endYear: "2024",
-  decreaseStartMonth: () => {},
-  increaseStartMonth: () => {},
-  decreaseStartYear: () => {},
-  increaseStartYear: () => {},
-  decreaseEndMonth: () => {},
-  increaseEndMonth: () => {},
-  decreaseEndYear: () => {},
-  increaseEndYear: () => {},
-  toCurrentMonth: () => {},
-  toCurrentYear: () => {},
+interface DateContextType extends DateState {
+    decreaseStartMonth: () => void;
+    increaseStartMonth: () => void;
+    decreaseStartYear: () => void;
+    increaseStartYear: () => void;
+    decreaseEndMonth: () => void;
+    increaseEndMonth: () => void;
+    decreaseEndYear: () => void;
+    increaseEndYear: () => void;
+    toCurrentMonth: () => void;
+    toCurrentYear: () => void;
+}
+
+
+const initialState: DateState = {
+    startMonth: getCurrentMonth(),
+    startYear: getCurrentYear(),
+    endMonth: getCurrentMonth(),
+    endYear: getCurrentYear(),
 };
 
-export const DateContext = createContext<DateContextType>(initialDateContext);
+function dateReducer(state: DateState, action: { type: string }) {
+    const { startMonth, startYear, endMonth, endYear } = state;
 
-function DateProvider({children}: {children: React.ReactNode}) {
+    switch (action.type) {
+        case "INCREASE_START_MONTH":
+            return {
+                ...state,
+                startMonth: nextMonth(startMonth),
+            };
+        case "DECREASE_START_MONTH":
+            return {
+                ...state,
+                startMonth: previousMonth(startMonth),
+            };
+        case "INCREASE_END_MONTH":
+            return {
+                ...state,
+                endMonth: nextMonth(endMonth),
+            };
+        case "DECREASE_END_MONTH":
+            return {
+                ...state,
+                endMonth: previousMonth(endMonth),
+            };
+        case "INCREASE_START_YEAR":
+            return {
+                ...state,
+                startYear: startYear + 1,
+            };
+        case "DECREASE_START_YEAR":
+            return {
+                ...state,
+                startYear: startYear - 1,
+            };
+        case "INCREASE_END_YEAR":
+            return {
+                ...state,
+                endYear: endYear + 1,
+            };
+        case "DECREASE_END_YEAR":
+            return {
+                ...state,
+                endYear: endYear - 1,
+            };
+        case "TO_CURRENT_MONTH":
+            return {
+                ...state,
+                startMonth: getCurrentMonth(),
+                endMonth: getCurrentMonth(),
+            };
+        case "TO_CURRENT_YEAR":
+            return {
+                ...state,
+                startYear: getCurrentYear(),
+                endYear: getCurrentYear(),
+            };
+        default:
+            return state;
+    }
+}
 
-        const [startMonth, setStartMonth] = useState("Jan");
-        const [startYear, setStartYear] = useState("2023");
-        const [endMonth, setEndMonth] = useState("Oct");
-        const [endYear, setEndYear] = useState("2024");
+export const DateContext = createContext<DateContextType>({
+    ...initialState,
+    decreaseStartMonth: () => {},
+    increaseStartMonth: () => {},
+    decreaseStartYear: () => {},
+    increaseStartYear: () => {},
+    decreaseEndMonth: () => {},
+    increaseEndMonth: () => {},
+    decreaseEndYear: () => {},
+    increaseEndYear: () => {},
+    toCurrentMonth: () => {},
+    toCurrentYear: () => {},
+});
 
-        const decreaseStartMonth = () => {};
-        const increaseStartMonth = () => {};
-        const decreaseStartYear = () => {};
-        const increaseStartYear = () => {};
-        const decreaseEndMonth = () => {};
-        const increaseEndMonth = () => {};
-        const decreaseEndYear = () => {};
-        const increaseEndYear = () => {};
-        const toCurrentMonth = () => {};
-        const toCurrentYear = () => {};
+function DateProvider({ children }: { children: React.ReactNode }) {
+    const [state, dispatch] = useReducer(dateReducer, initialState);
 
-    const value = useMemo(() => ({ 
-        startMonth,
-        startYear,
-        endMonth,
-        endYear,
-        decreaseStartMonth,
-        increaseStartMonth,
-        decreaseStartYear,
-        increaseStartYear,
-        decreaseEndMonth,
-        increaseEndMonth,
-        decreaseEndYear,
-        increaseEndYear,
-        toCurrentMonth,
-        toCurrentYear,
-    }), [startMonth, startYear, endMonth, endYear]);
+    const decreaseStartMonth = () => dispatch({ type: "DECREASE_START_MONTH" });
+    const increaseStartMonth = () => dispatch({ type: "INCREASE_START_MONTH" });
+    const decreaseStartYear = () => dispatch({ type: "DECREASE_START_YEAR" });
+    const increaseStartYear = () => dispatch({ type: "INCREASE_START_YEAR" });
+    const decreaseEndMonth = () => dispatch({ type: "DECREASE_END_MONTH" });
+    const increaseEndMonth = () => dispatch({ type: "INCREASE_END_MONTH" });
+    const decreaseEndYear = () => dispatch({ type: "DECREASE_END_YEAR" });
+    const increaseEndYear = () => dispatch({ type: "INCREASE_END_YEAR" });
+    const toCurrentMonth = () => dispatch({ type: "TO_CURRENT_MONTH" });
+    const toCurrentYear = () => dispatch({ type: "TO_CURRENT_YEAR" });
 
-    return <DateContext.Provider value={value}>{children}</DateContext.Provider>;
+    const value = useMemo(
+        () => ({
+            ...state,
+            decreaseStartMonth,
+            increaseStartMonth,
+            decreaseStartYear,
+            increaseStartYear,
+            decreaseEndMonth,
+            increaseEndMonth,
+            decreaseEndYear,
+            increaseEndYear,
+            toCurrentMonth,
+            toCurrentYear,
+        }),
+        [state]
+    );
+
+    return (
+        <DateContext.Provider value={value}>{children}</DateContext.Provider>
+    );
 }
 
 export default DateProvider;
