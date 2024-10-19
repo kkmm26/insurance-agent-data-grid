@@ -132,6 +132,7 @@ export const columns: ColumnDef<Policy>[] = [
     {
         id: "actions",
         enableHiding: false,
+        
         cell: ({ row }) => {
             return (
                 <DropdownMenu>
