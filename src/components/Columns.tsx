@@ -97,6 +97,7 @@ export const columns: ColumnDef<Policy>[] = [
                     onClick={() =>
                         column.toggleSorting(column.getIsSorted() === "asc")
                     }
+                    className="p-0"
                 >
                     Sum Insured
                     <ArrowUpDown className="w-4 h-4" />
@@ -120,6 +121,7 @@ export const columns: ColumnDef<Policy>[] = [
                     onClick={() =>
                         column.toggleSorting(column.getIsSorted() === "asc")
                     }
+                    className="p-0"
                 >
                     Expiry Date
                     <ArrowUpDown className="w-4 h-4" />
@@ -158,6 +160,7 @@ export const columns: ColumnDef<Policy>[] = [
                     onClick={() =>
                         column.toggleSorting(column.getIsSorted() === "asc")
                     }
+                    className="p-0"
                 >
                     Commission Amount
                     <ArrowUpDown className="w-4 h-4" />
@@ -184,6 +187,7 @@ export const columns: ColumnDef<Policy>[] = [
                     onClick={() =>
                         column.toggleSorting(column.getIsSorted() === "asc")
                     }
+                    className="p-0"
                 >
                     Commission Rate
                     <ArrowUpDown className="w-4 h-4" />
@@ -192,7 +196,7 @@ export const columns: ColumnDef<Policy>[] = [
         },
         cell: ({ row }) => {
             return (
-                <div className="text-center">{`${row.original.commissionRate}%`}</div>
+                <div className="text-right">{`${row.original.commissionRate}%`}</div>
             );
         },
     },

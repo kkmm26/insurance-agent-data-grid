@@ -18,7 +18,6 @@ const filterOptions = {
 
 type FilterCategory = "policyType" | "companyName";
 
-
 type FacetedFiltersProps<TData, TValue> = {
     columns?: Record<FilterCategory, Column<TData, TValue>>;
 };
@@ -27,36 +26,30 @@ function FacetedFilters<TData, TValue>({
     columns,
 }: FacetedFiltersProps<TData, TValue>) {
     const [selectedValues, setSelectedValues] = useState({
-        policyType: columns?.policyType?.getFilterValue() as string[] || [],
-        companyName: columns?.companyName?.getFilterValue() as string[] || [],
-    })
+        policyType: (columns?.policyType?.getFilterValue() as string[]) || [],
+        companyName: (columns?.companyName?.getFilterValue() as string[]) || [],
+    });
 
-    function handleCheckboxChange(category: FilterCategory, option: string){
-        if(selectedValues[category].includes(option)){
-            setSelectedValues(prevValues => ({
-                ...prevValues,
-                [category]: prevValues[category].filter(value => value !== option)
-            }))
-        }else{
-            setSelectedValues(prevValues => ({
-                ...prevValues,
-                [category]: [...prevValues[category], option]
-            }))
-        }
+    function handleCheckboxChange(category: FilterCategory, option: string) {
+        const newValues = {
+            ...selectedValues,
+            [category]: selectedValues[category].includes(option)
+                ? selectedValues[category].filter((value) => value !== option)
+                : [...selectedValues[category], option],
+        };
+
+        setSelectedValues(newValues);
+        columns?.[category]?.setFilterValue(
+            newValues[category].length ? newValues[category] : undefined
+        );
     }
 
-    useEffect(() => {
-        console.log(selectedValues)
-        columns?.policyType.setFilterValue(selectedValues.policyType.length ? selectedValues.policyType : undefined)
-        columns?.companyName.setFilterValue(selectedValues.companyName.length ? selectedValues.companyName : undefined)
-    }, [columns, selectedValues])
-
     const resetFilters = () => {
-        setSelectedValues(prevValues => ({
+        setSelectedValues((prevValues) => ({
             ...prevValues,
             policyType: [],
-            companyName: []
-        }))
+            companyName: [],
+        }));
     };
     return (
         <Popover>
@@ -79,9 +72,16 @@ function FacetedFilters<TData, TValue>({
                                     >
                                         <Checkbox
                                             id={`policyType-${option}`}
-                                            checked={selectedValues.policyType.includes(option) || false}
+                                            checked={
+                                                selectedValues.policyType.includes(
+                                                    option
+                                                ) || false
+                                            }
                                             onCheckedChange={() =>
-                                                handleCheckboxChange("policyType", option)
+                                                handleCheckboxChange(
+                                                    "policyType",
+                                                    option
+                                                )
                                             }
                                         />
                                         <label
@@ -105,9 +105,16 @@ function FacetedFilters<TData, TValue>({
                                 >
                                     <Checkbox
                                         id={`company-${option}`}
-                                        checked={selectedValues.companyName.includes(option) || false}
+                                        checked={
+                                            selectedValues.companyName.includes(
+                                                option
+                                            ) || false
+                                        }
                                         onCheckedChange={() =>
-                                            handleCheckboxChange("companyName", option)
+                                            handleCheckboxChange(
+                                                "companyName",
+                                                option
+                                            )
                                         }
                                     />
                                     <label

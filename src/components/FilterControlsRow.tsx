@@ -22,6 +22,7 @@ function FilterControlsRow<TData>({ table }: { table: Table<TData> }) {
                             .getColumn("clientName")
                             ?.setFilterValue(e.target.value)
                     }
+                    className="min-w-[200px]"
                 />
                 <FacetedFilters
                     columns={{
