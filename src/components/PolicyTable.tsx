@@ -8,6 +8,8 @@ import {
     getSortedRowModel,
     getFilteredRowModel,
     ColumnFiltersState,
+    getFacetedRowModel,
+    getFacetedUniqueValues,
 } from "@tanstack/react-table";
 import {
     Table,
@@ -46,6 +48,8 @@ function PolicyTable<TData, TValue>({
         getPaginationRowModel: getPaginationRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
+        getFacetedRowModel: getFacetedRowModel(),
+        getFacetedUniqueValues: getFacetedUniqueValues(),
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
         state: {

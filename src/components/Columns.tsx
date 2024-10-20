@@ -54,10 +54,16 @@ export const columns: ColumnDef<Policy>[] = [
     {
         accessorKey: "policyType",
         header: "Policy Type",
+        filterFn: (row, id, value) => {
+            return value.includes(row.getValue(id));
+        },
     },
     {
         accessorKey: "companyName",
         header: "Company Name",
+        filterFn: (row, id, value) => {
+            return value.includes(row.getValue(id));
+        },
     },
     {
         accessorKey: "policyNumber",
@@ -84,11 +90,13 @@ export const columns: ColumnDef<Policy>[] = [
     },
     {
         accessorKey: "sumInsured",
-        header: ({column}) => {
+        header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === "asc")
+                    }
                 >
                     Sum Insured
                     <ArrowUpDown className="w-4 h-4" />
@@ -97,13 +105,15 @@ export const columns: ColumnDef<Policy>[] = [
         },
         cell: ({ row }) => {
             return (
-                <div className="text-right">{formatCurrency(row.original.sumInsured)}</div>
+                <div className="text-right">
+                    {formatCurrency(row.original.sumInsured)}
+                </div>
             );
         },
     },
     {
         accessorKey: "expiryDate",
-        header: ({column}) => {
+        header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
@@ -171,7 +181,9 @@ export const columns: ColumnDef<Policy>[] = [
             return (
                 <Button
                     variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === "asc")
+                    }
                 >
                     Commission Rate
                     <ArrowUpDown className="w-4 h-4" />

@@ -16,7 +16,7 @@ const initialColumns = [
     { label: "Expiration Date", value: "expirationDate", selected: true },
 ];
 
-function ColumnsFilter() {
+function ColumnsFilter() { // change name to ColumnsVisibility
     const [columns, setColumns] = useState(initialColumns);
 
     const handleCheckboxChange = (value: string) => {
