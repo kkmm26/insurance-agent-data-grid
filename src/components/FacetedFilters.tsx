@@ -7,8 +7,8 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { CheckIcon, Filter } from "lucide-react";
-import { policyTypes, companyNames, Policy } from "@/data"; // Import types from data.ts
+import { Filter } from "lucide-react";
+import { policyTypes, companyNames } from "@/data"; // Import types from data.ts
 import { Column } from "@tanstack/react-table";
 
 const filterOptions = {

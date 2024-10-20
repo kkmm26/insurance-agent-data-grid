@@ -9,7 +9,7 @@ import {
     DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Checkbox } from "./ui/checkbox";
 
 export const columns: ColumnDef<Policy>[] = [
@@ -204,7 +204,7 @@ export const columns: ColumnDef<Policy>[] = [
         id: "actions",
         enableHiding: false,
 
-        cell: ({ row }) => {
+        cell: () => {
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
