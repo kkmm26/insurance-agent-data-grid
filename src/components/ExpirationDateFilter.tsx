@@ -7,6 +7,8 @@ import {
     DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { useState } from "react";
+import { Column } from "@tanstack/react-table";
+import { addDays, addMonths, parse,  } from 'date-fns';
 
 const options = [
     {
@@ -23,24 +25,44 @@ const options = [
     },
 ];
 
-function ExpirationDateFilter() {
+type ExpirationDateFilterProps<TData, TValue> = {
+    column: Column<TData, TValue>;
+};
+
+function ExpirationDateFilter<TData, TValue>({
+    column,
+}: ExpirationDateFilterProps<TData, TValue>) {
     const [expirationDate, setExpirationDate] = useState<string>("All");
+
+    const handleItemSelected = (option: string) => {
+
+        setExpirationDate(option);
+        column?.setFilterValue(option==="All" ? undefined : option);
+    };
 
     return (
         <DropdownMenu>
             <DropdownMenuTrigger>
                 <Button variant="outline">
                     <ChevronDown className="h-4 w-4" /> Expired Within:{" "}
-                    {expirationDate === "7 days" && <span className="font-bold text-red-500">7 days</span>}
-                    {expirationDate === "1 month" && <span className="font-bold text-green-500">1 month</span>}
-                    {expirationDate === "All" && <span className="font-bold text-blue-500">All</span>}
+                    {expirationDate === "7 days" && (
+                        <span className="font-bold text-red-500">7 days</span>
+                    )}
+                    {expirationDate === "1 month" && (
+                        <span className="font-bold text-green-500">
+                            1 month
+                        </span>
+                    )}
+                    {expirationDate === "All" && (
+                        <span className="font-bold text-blue-500">All</span>
+                    )}
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
                 {options.map((option) => (
                     <DropdownMenuItem
                         key={option.value}
-                        onSelect={() => setExpirationDate(option.value)}
+                        onSelect={() => handleItemSelected(option.value)}
                     >
                         {option.label}
                     </DropdownMenuItem>

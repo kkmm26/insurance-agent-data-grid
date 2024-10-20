@@ -34,7 +34,7 @@ function PolicyTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-
+    const [columnVisibility, setColumnVisibility] = useState({});
     const table = useReactTable({
         columns,
         data,
@@ -46,9 +46,11 @@ function PolicyTable<TData, TValue>({
         getFacetedUniqueValues: getFacetedUniqueValues(),
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
+        onColumnVisibilityChange: setColumnVisibility,
         state: {
             sorting,
             columnFilters,
+            columnVisibility
         },
     });
 

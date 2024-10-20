@@ -1,8 +1,8 @@
 import { Input } from "./ui/input";
 import ExpirationDateFilter from "./ExpirationDateFilter";
-import ComissionStatusFilter from "./ComissionStatusFilter";
+import ComissionStatusFilter from "./CommissionStatusFilter";
 import PolicyStatusFilter from "./PolicyStatusFilter";
-import ColumnsFilter from "./ColumnsFilter";
+import ColumnsVisibility from "./ColumnsVisibility";
 import { Table } from "@tanstack/react-table";
 import FacetedFilters from "./FacetedFilters";
 
@@ -30,11 +30,11 @@ function FilterControlsRow<TData>({ table }: { table: Table<TData> }) {
                         companyName: table.getColumn("companyName")!,
                     }}
                 />
-                <PolicyStatusFilter />
-                <ExpirationDateFilter />
-                <ComissionStatusFilter />
+                <PolicyStatusFilter column={table.getColumn("policyStatus")!} />
+                <ExpirationDateFilter column={table.getColumn("expiryDate")!}/>
+                <ComissionStatusFilter column={table.getColumn("commissionStatus")!} />
             </div>
-            <ColumnsFilter />
+            <ColumnsVisibility table={table} />
         </div>
     );
 }

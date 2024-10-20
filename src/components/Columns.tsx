@@ -1,4 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
+import { addDays, addMonths, isWithinInterval, parse } from 'date-fns';
 
 import { Policy } from "../data";
 import { calculateCommissionAmount, cn, formatCurrency } from "@/lib/utils";
@@ -42,6 +43,8 @@ export const columns: ColumnDef<Policy>[] = [
     {
         accessorKey: "id",
         header: "No",
+        enableHiding: false,
+        enableSorting: false,
     },
     {
         accessorKey: "clientName",
@@ -131,6 +134,31 @@ export const columns: ColumnDef<Policy>[] = [
         cell: ({ row }) => {
             return <div className="text-right">{row.original.expiryDate}</div>;
         },
+        filterFn: (row, id, value) => {
+            if (!value) return true; 
+
+            const today = new Date();
+            const parsedDate = parse(
+                row.getValue(id),
+                "MMM dd yyyy",
+                new Date()
+            );
+            if (value === "7 days") {
+                return isWithinInterval(parsedDate, {
+                    start: today, 
+                    end: addDays(today, 7),
+                });
+            }
+
+            if (value === "1 month") {
+                return isWithinInterval(parsedDate, {
+                    start: today, 
+                    end: addMonths(today, 1), 
+                });
+            }
+
+            return false;
+        },
     },
     {
         accessorKey: "commissionStatus",
@@ -142,7 +170,7 @@ export const columns: ColumnDef<Policy>[] = [
                         className={cn(
                             row.original.commissionStatus === "Paid"
                                 ? "bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs "
-                                : "bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs "
+                                : "bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs "
                         )}
                     >
                         {row.original.commissionStatus}

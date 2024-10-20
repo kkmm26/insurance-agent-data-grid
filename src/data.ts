@@ -19,6 +19,23 @@ export type Policy = {
   remarks?: string;
 }
 
+export const COLUMNS = {
+    clientName: "Client Name",
+    policyNumber: "Policy Number",
+    policyStatus: "Policy Status",
+    commissionStatus: "Commission Status",
+    expirationDate: "Expiration Date",
+    sumInsured: "Sum Insured",
+    startDate: "Start Date",
+    expiryDate: "Expiry Date",
+    commissionAmount: "Commission Amount",
+    commissionRate: "Commission Rate",
+    remarks: "Remarks",
+    companyName: "Company Name",
+    policyType: "Policy Type",
+    clientContact: "Client Contact",
+};
+
 export const policyTypes: PolicyType[] = ["Motor", "Fire", "Life", "Health", "Travel"];
 export const policyStatuses: PolicyStatus[] = ["Active", "Expired"];
 export const commissionStatuses: CommissionStatus[] = ["Pending", "Paid"];
@@ -125,7 +142,7 @@ export const policies: Policy[] = [
         policyStatus: "Active",
         sumInsured: 80000,
         startDate: "Jun 21 2023",
-        expiryDate: "Jun 21 2024",
+        expiryDate: "Oct 21 2024",
         commissionStatus: "Paid",
         commissionAmount: 1600,
         commissionRate: 2,
