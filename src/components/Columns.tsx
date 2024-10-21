@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { addDays, addMonths, isWithinInterval, parse } from 'date-fns';
+import { addDays, addMonths, isBefore, isWithinInterval, parse } from 'date-fns';
 
 import { Policy } from "../data";
 import { calculateCommissionAmount, cn, formatCurrency } from "@/lib/utils";
@@ -156,6 +156,10 @@ export const columns: ColumnDef<Policy>[] = [
                     start: today, 
                     end: addMonths(today, 1), 
                 });
+            }
+
+            if (value === "Expired") {
+                return isBefore(parsedDate, today)
             }
 
             return false;

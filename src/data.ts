@@ -142,7 +142,7 @@ export const policies: Policy[] = [
         policyStatus: "Active",
         sumInsured: 80000,
         startDate: "Jun 21 2023",
-        expiryDate: "Oct 21 2024",
+        expiryDate: "Oct 29 2024",
         commissionStatus: "Paid",
         commissionAmount: 1600,
         commissionRate: 2,
