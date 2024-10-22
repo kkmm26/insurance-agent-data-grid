@@ -19,6 +19,8 @@ interface DateContextType extends DateState {
     increaseEndYear: () => void;
     toCurrentMonth: () => void;
     toCurrentYear: () => void;
+    onSelectMonth: (month: string, startOrEnd: "start" | "end") => void;
+    onSelectYear: (year: number, startOrEnd: "start" | "end") => void;
 }
 
 
@@ -29,7 +31,14 @@ const initialState: DateState = {
     endYear: getCurrentYear(),
 };
 
-function dateReducer(state: DateState, action: { type: string }) {
+function dateReducer(
+    state: DateState,
+    action: {
+        type: string;
+        startOrEnd?: "start" | "end";
+        value?: string | number;
+    }
+) {
     const { startMonth, startYear, endMonth, endYear } = state;
 
     switch (action.type) {
@@ -85,6 +94,18 @@ function dateReducer(state: DateState, action: { type: string }) {
                 startYear: getCurrentYear(),
                 endYear: getCurrentYear(),
             };
+        case "SELECT_MONTH":
+            return {
+                ...state,
+                [action.startOrEnd === "start" ? "startMonth" : "endMonth"]:
+                    action.value,
+            };
+        case "SELECT_YEAR":
+            return {
+                ...state,
+                [action.startOrEnd === "start" ? "startYear" : "endYear"]:
+                    action.value,
+            };
         default:
             return state;
     }
@@ -102,6 +123,8 @@ export const DateContext = createContext<DateContextType>({
     increaseEndYear: () => {},
     toCurrentMonth: () => {},
     toCurrentYear: () => {},
+    onSelectMonth: () => {},
+    onSelectYear: () => {},
 });
 
 function DateProvider({ children }: { children: React.ReactNode }) {
@@ -118,6 +141,12 @@ function DateProvider({ children }: { children: React.ReactNode }) {
     const toCurrentMonth = () => dispatch({ type: "TO_CURRENT_MONTH" });
     const toCurrentYear = () => dispatch({ type: "TO_CURRENT_YEAR" });
 
+    const onSelectMonth = (month: string, startOrEnd: "start" | "end") => {
+        dispatch({ type: `SELECT_MONTH`, value: month, startOrEnd });
+    };
+    const onSelectYear = (year: number, startOrEnd: "start" | "end") => {
+        dispatch({ type: `SELECT_YEAR`, value: year, startOrEnd });
+    };
     const value = useMemo(
         () => ({
             ...state,
@@ -131,6 +160,8 @@ function DateProvider({ children }: { children: React.ReactNode }) {
             increaseEndYear,
             toCurrentMonth,
             toCurrentYear,
+            onSelectMonth,
+            onSelectYear,
         }),
         [state]
     );

@@ -117,6 +117,23 @@ export const columns: ColumnDef<Policy>[] = [
         },
     },
     {
+        accessorKey: "startDate",
+        header: ({column}) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === "asc")
+                    }
+                    className="p-0"
+                >
+                    Start Date
+                    <ArrowUpDown className="w-4 h-4" />
+                </Button>
+            );
+        }
+    },
+    {
         accessorKey: "expiryDate",
         header: ({ column }) => {
             return (
@@ -136,7 +153,7 @@ export const columns: ColumnDef<Policy>[] = [
             return <div className="text-right">{row.original.expiryDate}</div>;
         },
         filterFn: (row, id, value) => {
-            if (!value) return true; 
+            if (!value) return true;
 
             const today = new Date();
             const parsedDate = parse(
@@ -146,20 +163,20 @@ export const columns: ColumnDef<Policy>[] = [
             );
             if (value === "7 days") {
                 return isWithinInterval(parsedDate, {
-                    start: today, 
+                    start: today,
                     end: addDays(today, 7),
                 });
             }
 
             if (value === "1 month") {
                 return isWithinInterval(parsedDate, {
-                    start: today, 
-                    end: addMonths(today, 1), 
+                    start: today,
+                    end: addMonths(today, 1),
                 });
             }
 
             if (value === "Expired") {
-                return isBefore(parsedDate, today)
+                return isBefore(parsedDate, today);
             }
 
             return false;
@@ -242,9 +259,7 @@ export const columns: ColumnDef<Policy>[] = [
         enableHiding: false,
 
         cell: () => {
-            return (
-                <RowActions />
-            );
+            return <RowActions />;
         },
     },
 ];

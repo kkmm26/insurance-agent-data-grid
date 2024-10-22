@@ -14,18 +14,18 @@ export function calculateCommissionAmount(value: number) {
 }
 
 export function getCurrentYear() {
-    return new Date().getFullYear();
+    return parseInt(format(new Date(), "yyyy"));
 }
 
 export function getCurrentMonth() {
     return format(new Date(), "MMM");
 }
 
-const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+export const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 export function nextMonth(month: string) {
-    return months[(months.indexOf(month) + 1) % 12];
+    return MONTHS[(MONTHS.indexOf(month) + 1) % 12];
 }
 
 export function previousMonth(month: string) {
-    return months[(months.indexOf(month) + 11) % 12];
+    return MONTHS[(MONTHS.indexOf(month) + 11) % 12];
 }
