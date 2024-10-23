@@ -1,18 +1,6 @@
+
 import {
-    ColumnDef,
-    flexRender,
-    getCoreRowModel,
-    getPaginationRowModel,
-    useReactTable,
-    SortingState,
-    getSortedRowModel,
-    getFilteredRowModel,
-    ColumnFiltersState,
-    getFacetedRowModel,
-    getFacetedUniqueValues,
-} from "@tanstack/react-table";
-import {
-    Table,
+    Table as TableComponent,
     TableBody,
     TableCell,
     TableHead,
@@ -20,45 +8,19 @@ import {
     TableRow,
 } from "./ui/table";
 
-import { useState } from "react";
 import FilterControlsRow from "./FilterControlsRow";
 import Pagination from "./Pagination";
-interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<TData, TValue>[];
-    data: TData[];
-}
+import { useTable } from "@/providers/TableProvider";
+import { flexRender } from "@tanstack/react-table";
 
-function PolicyTable<TData, TValue>({
-    columns,
-    data,
-}: DataTableProps<TData, TValue>) {
-    const [sorting, setSorting] = useState<SortingState>([]);
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-    const [columnVisibility, setColumnVisibility] = useState({});
-    const table = useReactTable({
-        columns,
-        data,
-        getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        getFilteredRowModel: getFilteredRowModel(),
-        getFacetedRowModel: getFacetedRowModel(),
-        getFacetedUniqueValues: getFacetedUniqueValues(),
-        onSortingChange: setSorting,
-        onColumnFiltersChange: setColumnFilters,
-        onColumnVisibilityChange: setColumnVisibility,
-        state: {
-            sorting,
-            columnFilters,
-            columnVisibility
-        },
-    });
+function PolicyTable() {
+    const { table } = useTable();
 
     return (
         <div>
             <FilterControlsRow table={table} />
             <div>
-                <Table>
+                <TableComponent>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
@@ -93,7 +55,6 @@ function PolicyTable<TData, TValue>({
                         ) : (
                             <TableRow>
                                 <TableCell
-                                    colSpan={columns.length}
                                     className="h-24 text-center"
                                 >
                                     No results.
@@ -101,7 +62,7 @@ function PolicyTable<TData, TValue>({
                             </TableRow>
                         )}
                     </TableBody>
-                </Table>
+                </TableComponent>
             </div>
             <Pagination table={table} />
         </div>

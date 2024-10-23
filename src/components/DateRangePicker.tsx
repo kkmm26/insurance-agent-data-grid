@@ -1,6 +1,6 @@
 import DatePicker from "./ui/DatePicker";
 import { useContext } from "react";
-import { DateContext } from "../providers/DateProvider";
+import { PolicyStartDateContext } from "../providers/PolicyStartDateProvider";
 
 function DateRangePicker() {
     const {
@@ -18,7 +18,7 @@ function DateRangePicker() {
         increaseEndYear,
         onSelectMonth,
         onSelectYear,
-    } = useContext(DateContext);
+    } = useContext(PolicyStartDateContext);
 
     return (
         <div className="flex items-center">

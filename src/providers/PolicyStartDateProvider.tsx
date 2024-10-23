@@ -1,14 +1,21 @@
-import { createContext, useReducer, useMemo } from "react";
-import { getCurrentMonth, getCurrentYear, nextMonth, previousMonth } from "@/lib/utils";
+import { createContext, useReducer, useMemo, useEffect } from "react";
+import {
+    getCurrentMonth,
+    getCurrentYear,
+    nextMonth,
+    previousMonth,
+} from "@/lib/utils";
+import { useTable } from "./TableProvider";
+import { isWithinInterval, parse, getMonth, getYear, format, isBefore } from "date-fns";
 
-interface DateState {
+interface PolicyStartDateState {
     startMonth: string;
     startYear: number;
     endMonth: string;
     endYear: number;
 }
 
-interface DateContextType extends DateState {
+interface PolicyStartDateContextType extends PolicyStartDateState {
     decreaseStartMonth: () => void;
     increaseStartMonth: () => void;
     decreaseStartYear: () => void;
@@ -23,16 +30,15 @@ interface DateContextType extends DateState {
     onSelectYear: (year: number, startOrEnd: "start" | "end") => void;
 }
 
-
-const initialState: DateState = {
+const initialState: PolicyStartDateState = {
     startMonth: getCurrentMonth(),
     startYear: getCurrentYear(),
     endMonth: getCurrentMonth(),
     endYear: getCurrentYear(),
 };
 
-function dateReducer(
-    state: DateState,
+function policyStartDateReducer(
+    state: PolicyStartDateState,
     action: {
         type: string;
         startOrEnd?: "start" | "end";
@@ -93,6 +99,8 @@ function dateReducer(
                 ...state,
                 startYear: getCurrentYear(),
                 endYear: getCurrentYear(),
+                startMonth: "Jan",
+                endMonth: "Dec",
             };
         case "SELECT_MONTH":
             return {
@@ -111,42 +119,72 @@ function dateReducer(
     }
 }
 
-export const DateContext = createContext<DateContextType>({
-    ...initialState,
-    decreaseStartMonth: () => {},
-    increaseStartMonth: () => {},
-    decreaseStartYear: () => {},
-    increaseStartYear: () => {},
-    decreaseEndMonth: () => {},
-    increaseEndMonth: () => {},
-    decreaseEndYear: () => {},
-    increaseEndYear: () => {},
-    toCurrentMonth: () => {},
-    toCurrentYear: () => {},
-    onSelectMonth: () => {},
-    onSelectYear: () => {},
-});
+export const PolicyStartDateContext = createContext<PolicyStartDateContextType>(
+    {
+        ...initialState,
+        decreaseStartMonth: () => {},
+        increaseStartMonth: () => {},
+        decreaseStartYear: () => {},
+        increaseStartYear: () => {},
+        decreaseEndMonth: () => {},
+        increaseEndMonth: () => {},
+        decreaseEndYear: () => {},
+        increaseEndYear: () => {},
+        toCurrentMonth: () => {},
+        toCurrentYear: () => {},
+        onSelectMonth: () => {},
+        onSelectYear: () => {},
+    }
+);
 
-function DateProvider({ children }: { children: React.ReactNode }) {
-    const [state, dispatch] = useReducer(dateReducer, initialState);
+function PolicyStartDateProvider({ children }: { children: React.ReactNode }) {
+    const [state, dispatch] = useReducer(policyStartDateReducer, initialState);
+    const { table } = useTable();
+    const policyStartDateColumn = table?.getColumn("startDate");
 
-    const decreaseStartMonth = () => dispatch({ type: "DECREASE_START_MONTH" });
-    const increaseStartMonth = () => dispatch({ type: "INCREASE_START_MONTH" });
-    const decreaseStartYear = () => dispatch({ type: "DECREASE_START_YEAR" });
-    const increaseStartYear = () => dispatch({ type: "INCREASE_START_YEAR" });
-    const decreaseEndMonth = () => dispatch({ type: "DECREASE_END_MONTH" });
-    const increaseEndMonth = () => dispatch({ type: "INCREASE_END_MONTH" });
-    const decreaseEndYear = () => dispatch({ type: "DECREASE_END_YEAR" });
-    const increaseEndYear = () => dispatch({ type: "INCREASE_END_YEAR" });
-    const toCurrentMonth = () => dispatch({ type: "TO_CURRENT_MONTH" });
-    const toCurrentYear = () => dispatch({ type: "TO_CURRENT_YEAR" });
+   
+    useEffect(()=>{
+        policyStartDateColumn?.setFilterValue({
+            startMonth: state.startMonth,
+            startYear: state.startYear,
+            endMonth: state.endMonth,
+            endYear: state.endYear,
+        });
+    }, [state])
+   
+
+    const decreaseStartMonth = () =>
+        dispatch({ type: "DECREASE_START_MONTH" });
+    const increaseStartMonth = () =>
+        dispatch({ type: "INCREASE_START_MONTH" });
+    const decreaseStartYear = () =>
+        dispatch({ type: "DECREASE_START_YEAR" });
+    const increaseStartYear = () =>
+        dispatch({ type: "INCREASE_START_YEAR" });
+    const decreaseEndMonth = () =>
+        dispatch({ type: "DECREASE_END_MONTH" });
+    const increaseEndMonth = () =>
+        dispatch({ type: "INCREASE_END_MONTH" });
+    const decreaseEndYear = () =>
+        dispatch({ type: "DECREASE_END_YEAR" });
+    const increaseEndYear = () =>
+        dispatch({ type: "INCREASE_END_YEAR" });
+    const toCurrentMonth = () =>
+        dispatch({ type: "TO_CURRENT_MONTH" });
+    const toCurrentYear = () =>
+        dispatch({ type: "TO_CURRENT_YEAR" });
 
     const onSelectMonth = (month: string, startOrEnd: "start" | "end") => {
-        dispatch({ type: `SELECT_MONTH`, value: month, startOrEnd });
+        dispatch({
+            type: "SELECT_MONTH",
+            value: month,
+            startOrEnd,
+        });
     };
     const onSelectYear = (year: number, startOrEnd: "start" | "end") => {
-        dispatch({ type: `SELECT_YEAR`, value: year, startOrEnd });
+        dispatch({ type: "SELECT_YEAR", value: year, startOrEnd });
     };
+
     const value = useMemo(
         () => ({
             ...state,
@@ -167,8 +205,10 @@ function DateProvider({ children }: { children: React.ReactNode }) {
     );
 
     return (
-        <DateContext.Provider value={value}>{children}</DateContext.Provider>
+        <PolicyStartDateContext.Provider value={value}>
+            {children}
+        </PolicyStartDateContext.Provider>
     );
 }
 
-export default DateProvider;
+export default PolicyStartDateProvider;

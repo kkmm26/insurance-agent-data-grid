@@ -1,16 +1,10 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { addDays, addMonths, isBefore, isWithinInterval, parse } from 'date-fns';
+import { addDays, addMonths, format, getMonth, getYear, isBefore, isWithinInterval, parse } from 'date-fns';
 
 import { Policy } from "../data";
 import { calculateCommissionAmount, cn, formatCurrency } from "@/lib/utils";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "./ui/checkbox";
 import RowActions from "./RowActions";
 
@@ -131,7 +125,20 @@ export const columns: ColumnDef<Policy>[] = [
                     <ArrowUpDown className="w-4 h-4" />
                 </Button>
             );
-        }
+        },
+        filterFn: (row, id, value) => {
+            const date = new Date(row.getValue(id));
+            const month = format(date, "MMM");
+            const year = format(date, "yyyy");
+            const parsedDate = parse(`${month} ${year}`, "MMM yyyy", new Date());
+            const startDate = parse(`${value.startMonth} ${value.startYear}`, "MMM yyyy", new Date());
+            const endDate = parse(`${value.endMonth} ${value.endYear}`, "MMM yyyy", new Date());
+            const sameYear = getYear(startDate) === getYear(endDate) && getYear(startDate) === getYear(parsedDate);
+            const sameMonth = getMonth(startDate) === getMonth(endDate) && getMonth(startDate) === getMonth(parsedDate);
+            
+            return isBefore(startDate, endDate) && isWithinInterval(parsedDate, { start: startDate, end: endDate }) || sameYear && sameMonth;
+
+        },
     },
     {
         accessorKey: "expiryDate",

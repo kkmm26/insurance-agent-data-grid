@@ -31,8 +31,13 @@ function FilterControlsRow<TData>({ table }: { table: Table<TData> }) {
                     }}
                 />
                 <PolicyStatusFilter column={table.getColumn("policyStatus")!} />
-                <ExpirationDateFilter column={table.getColumn("expiryDate")!}/>
-                <ComissionStatusFilter column={table.getColumn("commissionStatus")!} />
+                
+                    <ExpirationDateFilter
+                        column={table.getColumn("expiryDate")!}
+                    />
+                <ComissionStatusFilter
+                    column={table.getColumn("commissionStatus")!}
+                />
             </div>
             <ColumnsVisibility table={table} />
         </div>

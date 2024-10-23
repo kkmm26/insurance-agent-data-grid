@@ -16,7 +16,7 @@ interface DatePickerProps {
     onSelectYear: (year: number, startOrEnd: "start" | "end") => void;
 }
 
-const YEAR_RANGE = Array.from({ length: 10 }, (_, index) =>  2024 - index);
+const YEAR_RANGE = Array.from({ length: 10 }, (_, index) => 2024 - index);
 
 function DatePicker({
     value,
@@ -52,13 +52,15 @@ function DatePicker({
                                     MONTHS.map((month, index) => (
                                         <CommandItem
                                             onSelect={() => {
-                                                onSelectMonth(month, startOrEnd);
+                                                onSelectMonth(
+                                                    month,
+                                                    startOrEnd
+                                                );
                                                 setIsOpen(false);
                                             }}
                                             className="px-4"
                                             key={index}
                                             value={month}
-
                                         >
                                             {month}
                                         </CommandItem>

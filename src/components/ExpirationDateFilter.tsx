@@ -8,7 +8,6 @@ import {
 } from "./ui/dropdown-menu";
 import { useState } from "react";
 import { Column } from "@tanstack/react-table";
-import { addDays, addMonths, parse } from "date-fns";
 
 const options = [
     {
@@ -49,7 +48,9 @@ function ExpirationDateFilter<TData, TValue>({
                 <Button variant="outline">
                     <ChevronDown className="h-4 w-4" /> Expired Within:{" "}
                     {expirationDate === "Expired" && (
-                        <span className="font-bold text-slate-500">Expired</span>
+                        <span className="font-bold text-slate-500">
+                            Expired
+                        </span>
                     )}
                     {expirationDate === "7 days" && (
                         <span className="font-bold text-red-500">7 days</span>

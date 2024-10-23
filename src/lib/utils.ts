@@ -21,7 +21,7 @@ export function getCurrentMonth() {
     return format(new Date(), "MMM");
 }
 
-export const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+export const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 export function nextMonth(month: string) {
     return MONTHS[(MONTHS.indexOf(month) + 1) % 12];
 }

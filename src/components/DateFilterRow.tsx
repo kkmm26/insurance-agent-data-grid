@@ -1,10 +1,12 @@
 import { Button } from "./ui/button";
 import DateRangePicker from "./DateRangePicker";
-import { DateContext } from "@/providers/DateProvider";
 import { useContext } from "react";
+import { PolicyStartDateContext } from "@/providers/PolicyStartDateProvider";
+
+
 
 function DateFilterRow() {
-    const {toCurrentMonth, toCurrentYear} = useContext(DateContext);
+    const {toCurrentMonth, toCurrentYear} = useContext(PolicyStartDateContext);
     
 
     
