@@ -10,30 +10,24 @@ import {
 import { Textarea } from "./ui/textarea";
 import DatePickerFormElement from "./DatePickerFormElement.tsx";
 
-interface FormFieldProps {
-    label: string;
-    type: string;
-    options?: string[];
-}
 
-function FormFieldComponent({
-    label,
-    type,
-    options,
-    ...field
-}: FormFieldProps) {
+
+function FormFieldComponent({ label, type, options = [], field } : any) {
     return (
         <FormItem>
             <FormLabel>{label}</FormLabel>
             <FormControl>
                 <>
                     {type === "select" && (
-                        <Select {...field}>
+                        <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                        >
                             <SelectTrigger>
                                 <SelectValue placeholder={`Select ${label}`} />
                             </SelectTrigger>
                             <SelectContent>
-                                {options?.map((option) => (
+                                {options?.map((option :string) => (
                                     <SelectItem key={option} value={option}>
                                         {option}
                                     </SelectItem>
@@ -42,10 +36,10 @@ function FormFieldComponent({
                         </Select>
                     )}
                     {type === "textarea" && <Textarea {...field} />}
-                    {type === "date" && (
-                        <DatePickerFormElement label={label} {...field} />
+                    {type === "date" && <DatePickerFormElement {...field} />}
+                    {type === "input" && (
+                        <Input {...field} />
                     )}
-                    {type === "input" && <Input {...field} />}
                 </>
             </FormControl>
             <FormMessage />

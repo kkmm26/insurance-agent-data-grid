@@ -1,12 +1,11 @@
 import { format } from "date-fns";
 import { Button } from "./ui/button";
-import { FormControl, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "./ui/calendar";
 
-function DatePickerFormElement({ label, ...field }) {
+function DatePickerFormElement( {...field }) {
     return (
         <Popover>
             <PopoverTrigger asChild>
