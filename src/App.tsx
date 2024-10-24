@@ -23,7 +23,7 @@ export default function Dashboard() {
                             <DialogTrigger asChild>
                                 <Button>Add New Policy</Button>
                             </DialogTrigger>
-                            <DialogContent>
+                            <DialogContent className="min-w-[90%]">
                                 <NewPolicyForm />
                             </DialogContent>
                         </Dialog>
