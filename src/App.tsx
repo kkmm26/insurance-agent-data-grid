@@ -7,6 +7,10 @@ import TotalCommision from "./components/TotalCommision";
 import PolicyStartDateProvider from "./providers/PolicyStartDateProvider";
 import { TableProvider } from "./providers/TableProvider";
 
+import { Dialog, DialogContent, DialogTrigger } from "./components/ui/dialog";
+import NewPolicyForm from "./components/NewPolicyForm";
+
+
 export default function Dashboard() {
     return (
         <TableProvider>
@@ -14,7 +18,15 @@ export default function Dashboard() {
                 <div className="container mx-auto p-4">
                     <div className="flex justify-between items-center mb-8">
                         <TotalCommision />
-                        <Button>Add New Deal</Button>
+
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button>Add New Policy</Button>
+                            </DialogTrigger>
+                            <DialogContent>
+                                <NewPolicyForm />
+                            </DialogContent>
+                        </Dialog>
                     </div>
 
                     <DateFilterRow />
