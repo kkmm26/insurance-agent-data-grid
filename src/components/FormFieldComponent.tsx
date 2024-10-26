@@ -10,9 +10,7 @@ import {
 import { Textarea } from "./ui/textarea";
 import DatePickerFormElement from "./DatePickerFormElement.tsx";
 
-
-
-function FormFieldComponent({ label, type, options = [], field } : any) {
+function FormFieldComponent({ label, type, options = [], field }: any) {
     return (
         <FormItem>
             <FormLabel>{label}</FormLabel>
@@ -27,7 +25,7 @@ function FormFieldComponent({ label, type, options = [], field } : any) {
                                 <SelectValue placeholder={`Select ${label}`} />
                             </SelectTrigger>
                             <SelectContent>
-                                {options?.map((option :string) => (
+                                {options?.map((option: string) => (
                                     <SelectItem key={option} value={option}>
                                         {option}
                                     </SelectItem>
@@ -37,9 +35,7 @@ function FormFieldComponent({ label, type, options = [], field } : any) {
                     )}
                     {type === "textarea" && <Textarea {...field} />}
                     {type === "date" && <DatePickerFormElement {...field} />}
-                    {type === "input" && (
-                        <Input {...field} />
-                    )}
+                    {type === "input" && <Input {...field} />}
                 </>
             </FormControl>
             <FormMessage />

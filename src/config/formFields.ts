@@ -8,6 +8,7 @@ export const formFields = [
   { name: "policyNumber", label: "Policy Number", type: "input" },
   { name: "policyStatus", label: "Policy Status", type: "select", options: policyStatuses },
   { name: "sumInsured", label: "Sum Insured", type: "input" },
+  { name: "premiumAmount", label: "Premium Amount", type: "input" },
   { name: "startDate", label: "Start Date", type: "date" },
   { name: "expiryDate", label: "Expiry Date", type: "date" },
   { name: "commissionStatus", label: "Commission Status", type: "select", options: commissionStatuses },

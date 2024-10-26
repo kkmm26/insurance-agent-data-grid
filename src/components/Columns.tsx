@@ -11,7 +11,7 @@ import {
 } from "date-fns";
 
 import { Policy } from "../data";
-import { calculateCommissionAmount, cn, formatCurrency } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "./ui/checkbox";

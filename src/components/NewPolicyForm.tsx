@@ -7,6 +7,7 @@ import { ScrollArea } from "./ui/scroll-area";
 import { formFields } from "@/config/formFields";
 import FormFieldComponent from "./FormFieldComponent";
 import { isAfter } from "date-fns";
+import { calculateCommissionAmount } from "@/lib/utils";
 
 const formSchema = z
     .object({
@@ -19,6 +20,9 @@ const formSchema = z
         sumInsured: z.coerce
             .number({ invalid_type_error: "Should be Number" })
             .min(1, "Sum insured is required"),
+        premiumAmount: z.coerce
+            .number({ invalid_type_error: "Should be Number" })
+            .min(1, "Premium amount is required"),
         startDate: z.date(),
         expiryDate: z.date(),
         commissionStatus: z.string().min(1, "Commission status is required"),
@@ -40,20 +44,16 @@ type FormValues = z.infer<typeof formSchema>;
 function NewPolicyForm() {
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
-        // defaultValues: {
-        //     clientName: "kkmm",
-        //     clientContact: "mdy",
-        //     policyType: "Fire",
-        //     companyName: "GGI",
-        //     policyNumber: "F123",
-        //     policyStatus: "Active",
-        //     sumInsured: 0,
-        //     commissionStatus: "Pending",
-        //     commissionAmount: 0,
-        //     commissionRate: 0,
-        //     remarks: "",
-        // },
     });
+
+    const premiumAmount = form.watch("premiumAmount");
+    const commissionRate = form.watch("commissionRate");
+    const commissionAmount =
+        premiumAmount && commissionRate
+            ? calculateCommissionAmount(premiumAmount, commissionRate)
+            : 0;
+
+    form.setValue("commissionAmount", commissionAmount);
 
     function onSubmit(data: FormValues) {
         console.log(data);
