@@ -11,7 +11,11 @@ import { Dialog, DialogContent, DialogTrigger } from "./components/ui/dialog";
 import NewPolicyForm from "./components/NewPolicyForm";
 
 
+
+
 export default function Dashboard() {
+
+
     return (
         <TableProvider>
             <PolicyStartDateProvider>

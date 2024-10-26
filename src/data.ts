@@ -4,36 +4,45 @@ export type CommissionStatus = "Pending" | "Paid";
 export type CompanyName = "AYA SOMPO" | "GGI" | "YOUNG" | "IKBZ" | "FNI";
 export type Policy = {
   id: number;
+  // client
   clientName: string;
   clientContact: string;
+  // policy
+  policyNumber: string;
   policyType: PolicyType;
   companyName: CompanyName;
-  policyNumber: string;
-  policyStatus: PolicyStatus;
   sumInsured: number;
+  premiumAmount: number;
   startDate: string;
   expiryDate: string;
+  policyStatus: PolicyStatus;
+  // commission
   commissionStatus: CommissionStatus;
   commissionAmount: number;
   commissionRate: number;
+  // remark
   remarks?: string;
 }
 
 export const COLUMNS = {
+    // client
     clientName: "Client Name",
+    clientContact: "Client Contact",
+    // policy
     policyNumber: "Policy Number",
     policyStatus: "Policy Status",
-    commissionStatus: "Commission Status",
-    expirationDate: "Expiration Date",
+    policyType: "Policy Type",
+    companyName: "Company Name",
     sumInsured: "Sum Insured",
+    premiumAmount: "Premium Amount",
     startDate: "Start Date",
     expiryDate: "Expiry Date",
+    // commission
+    commissionStatus: "Commission Status",
     commissionAmount: "Commission Amount",
     commissionRate: "Commission Rate",
+    // remark
     remarks: "Remarks",
-    companyName: "Company Name",
-    policyType: "Policy Type",
-    clientContact: "Client Contact",
 };
 
 export const policyTypes: PolicyType[] = ["Motor", "Fire", "Life", "Health", "Travel"];
@@ -53,6 +62,7 @@ export const policies: Policy[] = [
         sumInsured: 20000,
         startDate: "May 15 2024",
         expiryDate: "May 15 2025",
+        premiumAmount: 10000,
         commissionStatus: "Pending",
         commissionAmount: 1000,
         commissionRate: 10,
@@ -68,6 +78,7 @@ export const policies: Policy[] = [
         sumInsured: 50000,
         startDate: "Jan 20 2023",
         expiryDate: "Jan 20 2023",
+        premiumAmount: 10000,
         commissionStatus: "Paid",
         commissionAmount: 500,
         commissionRate: 5,
@@ -83,6 +94,7 @@ export const policies: Policy[] = [
         sumInsured: 100000,
         startDate: "Jan 20 2023",
         expiryDate: "Jan 20 2024",
+        premiumAmount: 10000,
         commissionStatus: "Pending",
         commissionAmount: 2000,
         commissionRate: 2,
@@ -98,6 +110,7 @@ export const policies: Policy[] = [
         sumInsured: 75000,
         startDate: "Jul 01 2023",
         expiryDate: "Jul 01 2024",
+        premiumAmount: 10000,
         commissionStatus: "Paid",
         commissionAmount: 1500,
         commissionRate: 2,
@@ -113,6 +126,7 @@ export const policies: Policy[] = [
         sumInsured: 15000,
         startDate: "Sep 12 2022",
         expiryDate: "Sep 12 2023",
+        premiumAmount: 10000,
         commissionStatus: "Paid",
         commissionAmount: 750,
         commissionRate: 5,
@@ -128,6 +142,7 @@ export const policies: Policy[] = [
         sumInsured: 25000,
         startDate: "Feb 14 2024",
         expiryDate: "Feb 14 2025",
+        premiumAmount: 10000,
         commissionStatus: "Pending",
         commissionAmount: 1250,
         commissionRate: 5,
@@ -142,7 +157,8 @@ export const policies: Policy[] = [
         policyStatus: "Active",
         sumInsured: 80000,
         startDate: "Jun 21 2023",
-        expiryDate: "Oct 29 2024",
+        expiryDate: "Oct 29 2024",    
+        premiumAmount: 10000,
         commissionStatus: "Paid",
         commissionAmount: 1600,
         commissionRate: 2,
@@ -158,6 +174,7 @@ export const policies: Policy[] = [
         sumInsured: 90000,
         startDate: "Aug 30 2022",
         expiryDate: "Oct 30 2023",
+        premiumAmount: 10000,
         commissionStatus: "Paid",
         commissionAmount: 1800,
         commissionRate: 2,
@@ -173,6 +190,7 @@ export const policies: Policy[] = [
         sumInsured: 60000,
         startDate: "Nov 15 2023",
         expiryDate: "Nov 20 2024",
+        premiumAmount: 10000,
         commissionStatus: "Pending",
         commissionAmount: 1200,
         commissionRate: 2,
@@ -188,6 +206,7 @@ export const policies: Policy[] = [
         sumInsured: 30000,
         startDate: "Jan 11 2024",
         expiryDate: "Jan 11 2025",
+        premiumAmount: 10000,
         commissionStatus: "Pending",
         commissionAmount: 1500,
         commissionRate: 5,
@@ -203,6 +222,7 @@ export const policies: Policy[] = [
         sumInsured: 18000,
         startDate: "Nov 05 2022",
         expiryDate: "Nov 05 2023",
+        premiumAmount: 10000,
         commissionStatus: "Paid",
         commissionAmount: 900,
         commissionRate: 5,
@@ -218,6 +238,7 @@ export const policies: Policy[] = [
         sumInsured: 100000,
         startDate: "Sep 01 2023",
         expiryDate: "Sep 01 2024",
+        premiumAmount: 10000,
         commissionStatus: "Pending",
         commissionAmount: 2000,
         commissionRate: 2,
@@ -233,6 +254,7 @@ export const policies: Policy[] = [
         sumInsured: 120000,
         startDate: "Dec 31 2021",
         expiryDate: "Dec 31 2023",
+        premiumAmount: 10000,
         commissionStatus: "Paid",
         commissionAmount: 2400,
         commissionRate: 2,
@@ -248,6 +270,7 @@ export const policies: Policy[] = [
         sumInsured: 70000,
         startDate: "Oct 10 2023",
         expiryDate: "Oct 10 2024",
+        premiumAmount: 10000,
         commissionStatus: "Pending",
         commissionAmount: 1400,
         commissionRate: 2,
@@ -263,6 +286,7 @@ export const policies: Policy[] = [
         sumInsured: 25000,
         startDate: "Dec 12 2023",
         expiryDate: "Dec 12 2024",
+        premiumAmount: 10000,
         commissionStatus: "Paid",
         commissionAmount: 1250,
         commissionRate: 5,

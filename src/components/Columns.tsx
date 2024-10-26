@@ -1,5 +1,14 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { addDays, addMonths, format, getMonth, getYear, isBefore, isWithinInterval, parse } from 'date-fns';
+import {
+    addDays,
+    addMonths,
+    format,
+    getMonth,
+    getYear,
+    isBefore,
+    isWithinInterval,
+    parse,
+} from "date-fns";
 
 import { Policy } from "../data";
 import { calculateCommissionAmount, cn, formatCurrency } from "@/lib/utils";
@@ -111,8 +120,32 @@ export const columns: ColumnDef<Policy>[] = [
         },
     },
     {
+        accessorKey: "premiumAmount",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === "asc")
+                    }
+                    className="p-0"
+                >
+                    Premium Amount
+                    <ArrowUpDown className="w-4 h-4" />
+                </Button>
+            );
+        },
+        cell: ({ row }) => {
+            return (
+                <div className="text-right">
+                    {formatCurrency(row.original.premiumAmount)}
+                </div>
+            );
+        },
+    },
+    {
         accessorKey: "startDate",
-        header: ({column}) => {
+        header: ({ column }) => {
             return (
                 <Button
                     variant="ghost"
@@ -130,14 +163,36 @@ export const columns: ColumnDef<Policy>[] = [
             const date = new Date(row.getValue(id));
             const month = format(date, "MMM");
             const year = format(date, "yyyy");
-            const parsedDate = parse(`${month} ${year}`, "MMM yyyy", new Date());
-            const startDate = parse(`${value.startMonth} ${value.startYear}`, "MMM yyyy", new Date());
-            const endDate = parse(`${value.endMonth} ${value.endYear}`, "MMM yyyy", new Date());
-            const sameYear = getYear(startDate) === getYear(endDate) && getYear(startDate) === getYear(parsedDate);
-            const sameMonth = getMonth(startDate) === getMonth(endDate) && getMonth(startDate) === getMonth(parsedDate);
-            
-            return isBefore(startDate, endDate) && isWithinInterval(parsedDate, { start: startDate, end: endDate }) || sameYear && sameMonth;
+            const parsedDate = parse(
+                `${month} ${year}`,
+                "MMM yyyy",
+                new Date()
+            );
+            const startDate = parse(
+                `${value.startMonth} ${value.startYear}`,
+                "MMM yyyy",
+                new Date()
+            );
+            const endDate = parse(
+                `${value.endMonth} ${value.endYear}`,
+                "MMM yyyy",
+                new Date()
+            );
+            const sameYear =
+                getYear(startDate) === getYear(endDate) &&
+                getYear(startDate) === getYear(parsedDate);
+            const sameMonth =
+                getMonth(startDate) === getMonth(endDate) &&
+                getMonth(startDate) === getMonth(parsedDate);
 
+            return (
+                (isBefore(startDate, endDate) &&
+                    isWithinInterval(parsedDate, {
+                        start: startDate,
+                        end: endDate,
+                    })) ||
+                (sameYear && sameMonth)
+            );
         },
     },
     {
@@ -225,12 +280,9 @@ export const columns: ColumnDef<Policy>[] = [
             );
         },
         cell: ({ row }) => {
-            const commissionAmount = calculateCommissionAmount(
-                row.original.sumInsured
-            );
             return (
                 <div className="text-right">
-                    {formatCurrency(commissionAmount)}
+                    {formatCurrency(row.original.commissionAmount)}
                 </div>
             );
         },
