@@ -12,7 +12,9 @@ import { calculateCommissionAmount } from "@/lib/utils";
 const formSchema = z
     .object({
         clientName: z.string().min(1, "Client name is required"),
-        clientPhone: z.coerce.number({ invalid_type_error: "Should be Number" }),
+        clientPhone: z.coerce.number({
+            invalid_type_error: "Should be Number",
+        }),
         clientContact: z.string().min(1, "Client contact is required"),
         policyType: z.string().min(1, "Policy type is required"),
         companyName: z.string().min(1, "Company name is required"),
@@ -28,9 +30,11 @@ const formSchema = z
         expiryDate: z.date(),
         commissionStatus: z.string().min(1, "Commission status is required"),
         commissionAmount: z.coerce
-            .number({ invalid_type_error: "Should be Number" }).optional(),
+            .number({ invalid_type_error: "Should be Number" })
+            .optional(),
         commissionRate: z.coerce
-            .number({ invalid_type_error: "Should be Number" }).optional(),
+            .number({ invalid_type_error: "Should be Number" })
+            .optional(),
         remarks: z.string().optional(),
     })
     .refine((data) => isAfter(data.expiryDate, data.startDate), {
@@ -62,21 +66,19 @@ function NewPolicyForm() {
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <ScrollArea className="h-[calc(100vh-12rem)]">
-                    <div className="grid grid-cols-2 gap-6 px-4">
-                        {formFields.map((formField) => (
-                            <FormField
-                                control={form.control}
-                                name={formField.name as keyof FormValues}
-                                render={({ field }) => {
-                                    return (
-                                        <FormFieldComponent
-                                            {...formField}
-                                            field={field}
-                                        />
-                                    );
-                                }}
-                            />
-                        ))}
+                    <div className="grid grid-cols-4">
+                        <div className="col-span-1 ">
+                            <ClientDetailsFormField form={form} />
+                        </div>
+                        <div className="col-span-2 border-x">
+                            <PolicyDetailsFormField form={form} />
+                        </div>
+                        <div className="col-span-1">
+                            <CommissionFormField form={form} />
+                        </div>
+                    </div>
+                    <div className="w-[50%] mt-8">
+                        <RemarksFormField form={form} />
                     </div>
                 </ScrollArea>
                 <div className="h-2" />
@@ -85,6 +87,99 @@ function NewPolicyForm() {
                 </Button>
             </form>
         </Form>
+    );
+}
+
+function ClientDetailsFormField({ form }) {
+    return (
+        <div>
+            <h3 className="text-lg font-semibold text-center mb-4">
+                Client Details
+            </h3>
+            <div className="flex flex-col gap-6 px-4">
+                {formFields.clientDetails.map((formField) => (
+                    <FormField
+                        control={form.control}
+                        name={formField.name as keyof FormValues}
+                        render={({ field }) => {
+                            return (
+                                <FormFieldComponent
+                                    {...formField}
+                                    field={field}
+                                />
+                            );
+                        }}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+}
+
+function PolicyDetailsFormField({ form }) {
+    return (
+        <div>
+            <h3 className="text-lg font-semibold text-center mb-4">
+                Policy Details
+            </h3>
+            <div className="grid grid-cols-2 gap-6 px-4">
+                {formFields.policyDetails.map((formField) => (
+                    <FormField
+                        control={form.control}
+                        name={formField.name as keyof FormValues}
+                        render={({ field }) => {
+                            return (
+                                <FormFieldComponent
+                                    {...formField}
+                                    field={field}
+                                />
+                            );
+                        }}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+}
+
+function CommissionFormField({ form }) {
+    return (
+        <div>
+            <h3 className="text-lg font-semibold text-center mb-4">Commission</h3>
+            <div className="flex flex-col gap-6 px-4">
+                {formFields.commission.map((formField) => (
+                    <FormField
+                        control={form.control}
+                        name={formField.name as keyof FormValues}
+                        render={({ field }) => {
+                            return (
+                                <FormFieldComponent
+                                    {...formField}
+                                    field={field}
+                                />
+                            );
+                        }}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+}
+
+function RemarksFormField({ form }) {
+    return (
+        <FormField
+            control={form.control}
+            name={formFields.remarks[0].name as keyof FormValues}
+            render={({ field }) => {
+                return (
+                    <FormFieldComponent
+                        {...formFields.remarks[0]}
+                        field={field}
+                    />
+                );
+            }}
+        />
     );
 }
 
