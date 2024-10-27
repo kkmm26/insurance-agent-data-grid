@@ -55,6 +55,17 @@ export const columns: ColumnDef<Policy>[] = [
         header: "Client Name",
     },
     {
+        accessorKey: "clientPhone",
+        header: "Client Phone",
+        cell: ({ row }) => {
+            return (
+                <div className="text-right">
+                    <span>09-</span>{row.original.clientPhone}
+                </div>
+            );
+        },
+    },
+    {
         accessorKey: "clientContact",
         header: "Client Contact",
     },

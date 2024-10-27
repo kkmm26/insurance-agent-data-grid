@@ -12,6 +12,7 @@ import { calculateCommissionAmount } from "@/lib/utils";
 const formSchema = z
     .object({
         clientName: z.string().min(1, "Client name is required"),
+        clientPhone: z.coerce.number({ invalid_type_error: "Should be Number" }),
         clientContact: z.string().min(1, "Client contact is required"),
         policyType: z.string().min(1, "Policy type is required"),
         companyName: z.string().min(1, "Company name is required"),
@@ -27,11 +28,9 @@ const formSchema = z
         expiryDate: z.date(),
         commissionStatus: z.string().min(1, "Commission status is required"),
         commissionAmount: z.coerce
-            .number({ invalid_type_error: "Should be Number" })
-            .min(1, "Commission amount is required"),
+            .number({ invalid_type_error: "Should be Number" }).optional(),
         commissionRate: z.coerce
-            .number({ invalid_type_error: "Should be Number" })
-            .min(1, "Commission rate is required"),
+            .number({ invalid_type_error: "Should be Number" }).optional(),
         remarks: z.string().optional(),
     })
     .refine((data) => isAfter(data.expiryDate, data.startDate), {

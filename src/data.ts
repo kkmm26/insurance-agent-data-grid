@@ -6,6 +6,7 @@ export type Policy = {
   id: number;
   // client
   clientName: string;
+  clientPhone: number;
   clientContact: string;
   // policy
   policyNumber: string;
@@ -27,6 +28,7 @@ export type Policy = {
 export const COLUMNS = {
     // client
     clientName: "Client Name",
+    clientPhone: "Client Phone",
     clientContact: "Client Contact",
     // policy
     policyNumber: "Policy Number",
@@ -54,6 +56,7 @@ export const policies: Policy[] = [
     {
         id: 1,
         clientName: "John Doe",
+        clientPhone: 8123456789,
         clientContact: "08123456789",
         policyType: "Motor",
         companyName: "AYA SOMPO",
@@ -70,6 +73,7 @@ export const policies: Policy[] = [
     {
         id: 2,
         clientName: "Jane Smith",
+        clientPhone: 8912345678,
         clientContact: "09123456789",
         policyType: "Fire",
         companyName: "GGI",
@@ -86,6 +90,7 @@ export const policies: Policy[] = [
     {
         id: 3,
         clientName: "Alice Johnson",
+        clientPhone: 8098765432,
         clientContact: "08098765432",
         policyType: "Fire",
         companyName: "YOUNG",
@@ -102,6 +107,7 @@ export const policies: Policy[] = [
     {
         id: 4,
         clientName: "Bob Williams",
+        clientPhone: 8123456700,
         clientContact: "08123456700",
         policyType: "Fire",
         companyName: "IKBZ",
@@ -118,6 +124,7 @@ export const policies: Policy[] = [
     {
         id: 5,
         clientName: "Charlie Brown",
+        clientPhone: 8012345678,
         clientContact: "08012345678",
         policyType: "Motor",
         companyName: "AYA SOMPO",
@@ -134,6 +141,7 @@ export const policies: Policy[] = [
     {
         id: 6,
         clientName: "David Wilson",
+        clientPhone: 8223456712,
         clientContact: "08223456712",
         policyType: "Motor",
         companyName: "FNI",
@@ -150,6 +158,7 @@ export const policies: Policy[] = [
     {
         id: 7,
         clientName: "Emily Davis",
+        clientPhone: 8456789123,
         clientContact: "08456789123",
         policyType: "Life",
         companyName: "GGI",
@@ -166,6 +175,7 @@ export const policies: Policy[] = [
     {
         id: 8,
         clientName: "Frank Thompson",
+        clientPhone: 8091234567,
         clientContact: "08091234567",
         policyType: "Fire",
         companyName: "YOUNG",
@@ -182,6 +192,7 @@ export const policies: Policy[] = [
     {
         id: 9,
         clientName: "Grace Lee",
+        clientPhone: 8623456790,
         clientContact: "08623456790",
         policyType: "Fire",
         companyName: "AYA SOMPO",
@@ -198,6 +209,7 @@ export const policies: Policy[] = [
     {
         id: 10,
         clientName: "Henry Walker",
+        clientPhone: 8765432198,
         clientContact: "08765432198",
         policyType: "Travel",
         companyName: "IKBZ",
@@ -214,6 +226,7 @@ export const policies: Policy[] = [
     {
         id: 11,
         clientName: "Ivy Evans",
+        clientPhone: 8887654321,
         clientContact: "08887654321",
         policyType: "Motor",
         companyName: "GGI",
@@ -230,6 +243,7 @@ export const policies: Policy[] = [
     {
         id: 12,
         clientName: "Jack Harris",
+        clientPhone: 8323456789,
         clientContact: "08323456789",
         policyType: "Fire",
         companyName: "FNI",
@@ -246,6 +260,7 @@ export const policies: Policy[] = [
     {
         id: 13,
         clientName: "Karen Garcia",
+        clientPhone: 8543219876,
         clientContact: "08543219876",
         policyType: "Life",
         companyName: "AYA SOMPO",
@@ -262,6 +277,7 @@ export const policies: Policy[] = [
     {
         id: 14,
         clientName: "Larry Martinez",
+        clientPhone: 8901234567,
         clientContact: "08901234567",
         policyType: "Health",
         companyName: "IKBZ",
@@ -278,6 +294,7 @@ export const policies: Policy[] = [
     {
         id: 15,
         clientName: "Megan Anderson",
+        clientPhone: 8345678912,
         clientContact: "08345678912",
         policyType: "Travel",
         companyName: "YOUNG",

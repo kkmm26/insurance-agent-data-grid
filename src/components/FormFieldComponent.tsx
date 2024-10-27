@@ -9,6 +9,7 @@ import {
 } from "./ui/select";
 import { Textarea } from "./ui/textarea";
 import DatePickerFormElement from "./DatePickerFormElement.tsx";
+import PhoneInput from "./ui/phone-input.tsx";
 
 function FormFieldComponent({ label, type, options = [], field }: any) {
     return (
@@ -35,7 +36,22 @@ function FormFieldComponent({ label, type, options = [], field }: any) {
                     )}
                     {type === "textarea" && <Textarea {...field} />}
                     {type === "date" && <DatePickerFormElement {...field} />}
-                    {type === "input" && <Input {...field} />}
+                    {type === "input" && (
+                        <Input {...field} />
+                    )}
+                    {type === "number-input" && (
+                        <Input
+                            {...field}
+                            onKeyDown={(e) => {
+                                if (isNaN(Number(e.key)) && e.key !== "Backspace") {
+                                    e.preventDefault();
+                                }
+                            }}
+                        />
+                    )}
+                    {type === "phone-input" && (
+                        <PhoneInput field={field} />
+                    )}
                 </>
             </FormControl>
             <FormMessage />
