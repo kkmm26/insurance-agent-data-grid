@@ -5,7 +5,7 @@ import {
     nextMonth,
     previousMonth,
 } from "@/lib/utils";
-import { useTable } from "./TableProvider";
+import { useTableData } from "@/hooks/useTableData";
 
 interface PolicyStartDateState {
     startMonth: string;
@@ -138,7 +138,7 @@ export const PolicyStartDateContext = createContext<PolicyStartDateContextType>(
 
 function PolicyStartDateProvider({ children }: { children: React.ReactNode }) {
     const [state, dispatch] = useReducer(policyStartDateReducer, initialState);
-    const { table } = useTable();
+    const { table } = useTableData();
     const policyStartDateColumn = table?.getColumn("startDate");
 
    

@@ -8,6 +8,8 @@ import { formFields } from "@/config/formFields";
 import FormFieldComponent from "./FormFieldComponent";
 import { isAfter } from "date-fns";
 import { calculateCommissionAmount } from "@/lib/utils";
+import { useState } from "react";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "./ui/command";
 
 const formSchema = z
     .object({
@@ -77,7 +79,7 @@ function NewPolicyForm() {
                             <CommissionFormField form={form} />
                         </div>
                     </div>
-                    <div className="w-[50%] mt-8">
+                    <div className="w-[50%] mt-8 px-4 mb-4">
                         <RemarksFormField form={form} />
                     </div>
                 </ScrollArea>
@@ -90,7 +92,7 @@ function NewPolicyForm() {
     );
 }
 
-function ClientDetailsFormField({ form }) {
+function ClientDetailsFormField({ form }: any) {
     return (
         <div>
             <h3 className="text-lg font-semibold text-center mb-4">
@@ -116,7 +118,7 @@ function ClientDetailsFormField({ form }) {
     );
 }
 
-function PolicyDetailsFormField({ form }) {
+function PolicyDetailsFormField({ form }: any) {
     return (
         <div>
             <h3 className="text-lg font-semibold text-center mb-4">
@@ -142,10 +144,12 @@ function PolicyDetailsFormField({ form }) {
     );
 }
 
-function CommissionFormField({ form }) {
+function CommissionFormField({ form }: any) {
     return (
         <div>
-            <h3 className="text-lg font-semibold text-center mb-4">Commission</h3>
+            <h3 className="text-lg font-semibold text-center mb-4">
+                Commission
+            </h3>
             <div className="flex flex-col gap-6 px-4">
                 {formFields.commission.map((formField) => (
                     <FormField
@@ -166,7 +170,7 @@ function CommissionFormField({ form }) {
     );
 }
 
-function RemarksFormField({ form }) {
+function RemarksFormField({ form }: any) {
     return (
         <FormField
             control={form.control}
@@ -182,5 +186,7 @@ function RemarksFormField({ form }) {
         />
     );
 }
+
+
 
 export default NewPolicyForm;

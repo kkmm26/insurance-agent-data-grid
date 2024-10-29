@@ -9,16 +9,18 @@ import { TableProvider } from "./providers/TableProvider";
 
 import { Dialog, DialogContent, DialogTrigger } from "./components/ui/dialog";
 import NewPolicyForm from "./components/NewPolicyForm";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 
-
+const queryClient = new QueryClient();
 
 export default function Dashboard() {
 
 
     return (
-        <TableProvider>
-            <PolicyStartDateProvider>
+        <QueryClientProvider client={queryClient}>
+           
+                <PolicyStartDateProvider>
                 <div className="container mx-auto p-4">
                     <div className="flex justify-between items-center mb-8">
                         <TotalCommision />
@@ -37,7 +39,8 @@ export default function Dashboard() {
 
                     <PolicyTable />
                 </div>
-            </PolicyStartDateProvider>
-        </TableProvider>
+                </PolicyStartDateProvider>
+          
+        </QueryClientProvider>
     );
 }

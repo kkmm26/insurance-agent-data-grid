@@ -10,11 +10,11 @@ import {
 
 import FilterControlsRow from "./FilterControlsRow";
 import Pagination from "./Pagination";
-import { useTable } from "@/providers/TableProvider";
+import { useTableData } from "@/hooks/useTableData";
 import { flexRender } from "@tanstack/react-table";
 
 function PolicyTable() {
-    const { table } = useTable();
+    const { table } = useTableData();
 
     return (
         <div>

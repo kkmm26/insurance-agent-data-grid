@@ -1,4 +1,3 @@
-import { createContext, useState, useContext, ReactNode } from 'react';
 import {
     ColumnFiltersState,
     getCoreRowModel,
@@ -11,22 +10,30 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import { columns } from "../components/Columns";
-import { policies, Policy } from "../data";
+import { Policy } from "../data";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useState } from "react";
 
-interface TableContextType {
-    table: ReturnType<typeof useReactTable<Policy>>;
-}
+export function useTableData() {
+    const query = useQuery({
+        queryKey: ["policies"],
+        queryFn: async () => {
+            const response = await axios.get(
+                "https://insurance-data-grid.onrender.com/api/policies"
+            );
+            return response.data;
+        },
+        initialData: [],
+    });
 
-export const TableContext = createContext<TableContextType | undefined>(undefined);
-
-export function TableProvider({ children }: { children: ReactNode }) {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = useState({});
 
     const table = useReactTable({
         columns,
-        data: policies,
+        data: query.data,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         getSortedRowModel: getSortedRowModel(),
@@ -43,18 +50,5 @@ export function TableProvider({ children }: { children: ReactNode }) {
         },
     });
 
-    return (
-        <TableContext.Provider value={{ table }}>
-            {children}
-        </TableContext.Provider>
-    );
+    return { table };
 }
-
-export const useTable = () => {
-    const context = useContext(TableContext);
-    if (!context) {
-        throw new Error("useTable must be used within a TableProvider");
-    }
-    return context;
-};
-

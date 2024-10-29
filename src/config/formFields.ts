@@ -4,7 +4,7 @@ export const formFields = {
   clientDetails: [
     { name: "clientName", label: "Client Name", type: "input" },
     { name: "clientPhone", label: "Client Phone", type: "phone-input" },
-    { name: "clientContact", label: "Client Contact", type: "input" },
+    { name: "clientContact", label: "Client Contact", type: "textarea" },
   ],
   policyDetails: [
     { name: "policyType", label: "Policy Type", type: "select", options: policyTypes },
