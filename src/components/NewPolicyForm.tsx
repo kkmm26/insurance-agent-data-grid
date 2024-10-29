@@ -6,8 +6,11 @@ import { Button } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
 import { formFields } from "@/config/formFields";
 import FormFieldComponent from "./FormFieldComponent";
-import { isAfter } from "date-fns";
+import { format, isAfter } from "date-fns";
 import { calculateCommissionAmount } from "@/lib/utils";
+import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const formSchema = z
     .object({
@@ -26,8 +29,8 @@ const formSchema = z
         premiumAmount: z.coerce
             .number({ invalid_type_error: "Should be Number" })
             .min(1, "Premium amount is required"),
-        startDate: z.date(),
-        expiryDate: z.date(),
+        startDate: z.coerce.string(),
+        expiryDate: z.coerce.string(),
         commissionStatus: z.string().min(1, "Commission status is required"),
         commissionAmount: z.coerce
             .number({ invalid_type_error: "Should be Number" })
@@ -37,14 +40,14 @@ const formSchema = z
             .optional(),
         remarks: z.string().optional(),
     })
-    .refine((data) => isAfter(data.expiryDate, data.startDate), {
+    .refine((data) => isAfter(new Date(data.expiryDate), new Date(data.startDate)), {
         path: ["expiryDate"],
         message: "Expiry date must be greater than start date",
     });
 
 type FormValues = z.infer<typeof formSchema>;
 
-function NewPolicyForm() {
+function NewPolicyForm({ closeDialog }: { closeDialog: () => void }) {
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
     });
@@ -58,7 +61,24 @@ function NewPolicyForm() {
 
     form.setValue("commissionAmount", commissionAmount);
 
+    const mutation = useMutation({
+        mutationFn: async (data: FormValues) => {
+            await axios.post("https://insurance-data-grid.onrender.com/api/policies", data);
+        },
+        onSuccess: async () => {
+            closeDialog();
+            toast("Policy added successfully");
+            location.reload();  // change this to refetch later
+            form.reset();
+        },
+        onError: () => {
+            toast("Something went wrong");
+        },
+    });
     function onSubmit(data: FormValues) {
+        data.startDate = format(new Date(data.startDate), "MMM dd yyyy");
+        data.expiryDate = format(new Date(data.expiryDate), "MMM dd yyyy");
+        mutation.mutate(data);
         console.log(data);
     }
 
