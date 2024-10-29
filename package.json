@@ -20,6 +20,10 @@
     "@radix-ui/react-scroll-area": "^1.2.0",
     "@radix-ui/react-select": "^2.1.2",
     "@radix-ui/react-slot": "^1.1.0",
+<<<<<<< HEAD
+=======
+    "@radix-ui/react-toast": "^1.2.2",
+>>>>>>> date-filter-fix
     "@tanstack/react-query": "^5.59.16",
     "@tanstack/react-table": "^8.20.5",
     "axios": "^1.7.7",
@@ -28,10 +32,12 @@
     "cmdk": "^1.0.0",
     "date-fns": "^2.30.0",
     "lucide-react": "^0.453.0",
+    "next-themes": "^0.3.0",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.1",
+    "sonner": "^1.5.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.8"
