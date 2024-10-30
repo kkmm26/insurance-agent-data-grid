@@ -11,9 +11,9 @@ function DateFilterRow() {
 
     
     return (
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-between items-center mb-4 overflow-x-auto">
             <DateRangePicker />
-            <div className="space-x-2">
+            <div className="space-x-2 flex">
                 <Button onClick={() => {toCurrentYear()}} variant="outline">
                     This Year
                 </Button>

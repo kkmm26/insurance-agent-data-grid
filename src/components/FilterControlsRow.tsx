@@ -8,7 +8,7 @@ import FacetedFilters from "./FacetedFilters";
 
 function FilterControlsRow<TData>({ table }: { table: Table<TData> }) {
     return (
-        <div className="flex justify-between mb-6">
+        <div className="flex justify-between mb-6 overflow-x-auto">
             <div className="flex space-x-2">
                 <Input
                     placeholder="Search Client Names"

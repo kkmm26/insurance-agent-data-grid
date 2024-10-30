@@ -6,12 +6,14 @@ function PhoneInput({ field }: { field: any }) {
             <span className="text-muted-foreground">09 </span>
             <span className="text-muted-foreground">-</span>
             <Input
-                type="tel"
+                type="text"
+                pattern="[0-9]*"
+                inputMode="numeric"
                 {...field}
-                onKeyDown={(e) => {
-                    if (isNaN(Number(e.key)) && e.key !== "Backspace") {
-                        e.preventDefault();
-                    }
+                onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9]/g, '');
+                    e.target.value = value;
+                    field.onChange(e);
                 }}
                 minLength={9}
                 maxLength={9}

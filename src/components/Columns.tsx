@@ -43,16 +43,21 @@ export const columns: ColumnDef<Policy>[] = [
         ),
         enableSorting: false,
         enableHiding: false,
+        
     },
     {
         accessorKey: "id",
         header: "No",
         enableHiding: false,
         enableSorting: false,
+        cell: ({ row }) => {
+            return <div className="text-center">{row.index + 1}</div>;
+        },
     },
     {
         accessorKey: "clientName",
         header: "Client Name",
+        show: false,
     },
     {
         accessorKey: "clientPhone",
@@ -328,8 +333,8 @@ export const columns: ColumnDef<Policy>[] = [
         id: "actions",
         enableHiding: false,
 
-        cell: () => {
-            return <RowActions />;
+        cell: ({row}) => {
+            return <RowActions row={row} />;
         },
     },
 ];

@@ -8,7 +8,7 @@ import { formFields } from "@/config/formFields";
 import FormFieldComponent from "./FormFieldComponent";
 import { format, isAfter } from "date-fns";
 import { calculateCommissionAmount } from "@/lib/utils";
-import axios from "axios";
+import { policyApi } from '@/services/api';
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -38,7 +38,7 @@ const formSchema = z
         commissionRate: z.coerce
             .number({ invalid_type_error: "Should be Number" })
             .optional(),
-        remarks: z.string().optional(),
+        remarks: z.string().nullable().optional(),
     })
     .refine((data) => isAfter(new Date(data.expiryDate), new Date(data.startDate)), {
         path: ["expiryDate"],
@@ -47,9 +47,10 @@ const formSchema = z
 
 type FormValues = z.infer<typeof formSchema>;
 
-function NewPolicyForm({ closeDialog }: { closeDialog: () => void }) {
+function NewPolicyForm({ closeDialog, defaultValues }: { closeDialog: () => void, defaultValues?: FormValues }) {
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
+        defaultValues: defaultValues,
     });
 
     const premiumAmount = form.watch("premiumAmount");
@@ -63,23 +64,30 @@ function NewPolicyForm({ closeDialog }: { closeDialog: () => void }) {
 
     const mutation = useMutation({
         mutationFn: async (data: FormValues) => {
-            await axios.post("https://insurance-data-grid.onrender.com/api/policies", data);
+            if (defaultValues?.id) {
+                await policyApi.updatePolicy(defaultValues.id, data);
+            } else {
+                await policyApi.createPolicy(data);
+            }
         },
         onSuccess: async () => {
             closeDialog();
-            toast("Policy added successfully");
             location.reload();  // change this to refetch later
             form.reset();
+            toast(defaultValues ? "Policy updated successfully" : "Policy added successfully");
         },
         onError: () => {
             toast("Something went wrong");
         },
     });
     function onSubmit(data: FormValues) {
-        data.startDate = format(new Date(data.startDate), "MMM dd yyyy");
-        data.expiryDate = format(new Date(data.expiryDate), "MMM dd yyyy");
-        mutation.mutate(data);
-        console.log(data);
+        const formattedData = {
+            ...data,
+            startDate: format(new Date(data.startDate), "MMM dd yyyy"),
+            expiryDate: format(new Date(data.expiryDate), "MMM dd yyyy")
+        };
+        mutation.mutate(formattedData);
+        console.log(formattedData);
     }
 
     return (

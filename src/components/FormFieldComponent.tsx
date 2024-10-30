@@ -42,10 +42,10 @@ function FormFieldComponent({ label, type, options = [], field }: any) {
                     {type === "number-input" && (
                         <Input
                             {...field}
-                            onKeyDown={(e) => {
-                                if (isNaN(Number(e.key)) && e.key !== "Backspace") {
-                                    e.preventDefault();
-                                }
+                            onChange={(e) => {
+                                const value = e.target.value.replace(/[^0-9]/g, '');
+                                e.target.value = value;
+                                field.onChange(e);
                             }}
                         />
                     )}

@@ -14,8 +14,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 
 export default function Dashboard() {
-    const [open, setOpen] = useState(false);
     const queryClient = new QueryClient();
+    const [open, setOpen] = useState(false);
 
     function closeDialog() {
         setOpen(false);
