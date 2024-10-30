@@ -8,12 +8,13 @@ import { formFields } from "@/config/formFields";
 import FormFieldComponent from "./FormFieldComponent";
 import { format, isAfter } from "date-fns";
 import { calculateCommissionAmount } from "@/lib/utils";
-import { policyApi } from '@/services/api';
+import { policyApi } from "@/services/api";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 const formSchema = z
     .object({
+        id: z.number().optional(),
         clientName: z.string().min(1, "Client name is required"),
         clientPhone: z.coerce.number({
             invalid_type_error: "Should be Number",
@@ -40,14 +41,23 @@ const formSchema = z
             .optional(),
         remarks: z.string().nullable().optional(),
     })
-    .refine((data) => isAfter(new Date(data.expiryDate), new Date(data.startDate)), {
-        path: ["expiryDate"],
-        message: "Expiry date must be greater than start date",
-    });
+    .refine(
+        (data) => isAfter(new Date(data.expiryDate), new Date(data.startDate)),
+        {
+            path: ["expiryDate"],
+            message: "Expiry date must be greater than start date",
+        }
+    );
 
 type FormValues = z.infer<typeof formSchema>;
 
-function NewPolicyForm({ closeDialog, defaultValues }: { closeDialog: () => void, defaultValues?: FormValues }) {
+function NewPolicyForm({
+    closeDialog,
+    defaultValues,
+}: {
+    closeDialog: () => void;
+    defaultValues?: FormValues;
+}) {
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: defaultValues,
@@ -71,10 +81,18 @@ function NewPolicyForm({ closeDialog, defaultValues }: { closeDialog: () => void
             }
         },
         onSuccess: async () => {
+            // await queryClient.invalidateQueries({ queryKey: ["policies"] });
+
             closeDialog();
-            location.reload();  // change this to refetch later
             form.reset();
-            toast(defaultValues ? "Policy updated successfully" : "Policy added successfully");
+            toast(
+                defaultValues
+                    ? "Policy updated successfully"
+                    : "Policy added successfully"
+            );
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
         },
         onError: () => {
             toast("Something went wrong");
@@ -84,7 +102,7 @@ function NewPolicyForm({ closeDialog, defaultValues }: { closeDialog: () => void
         const formattedData = {
             ...data,
             startDate: format(new Date(data.startDate), "MMM dd yyyy"),
-            expiryDate: format(new Date(data.expiryDate), "MMM dd yyyy")
+            expiryDate: format(new Date(data.expiryDate), "MMM dd yyyy"),
         };
         mutation.mutate(formattedData);
         console.log(formattedData);
@@ -212,7 +230,5 @@ function RemarksFormField({ form }: any) {
         />
     );
 }
-
-
 
 export default NewPolicyForm;

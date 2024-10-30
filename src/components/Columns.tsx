@@ -57,7 +57,6 @@ export const columns: ColumnDef<Policy>[] = [
     {
         accessorKey: "clientName",
         header: "Client Name",
-        show: false,
     },
     {
         accessorKey: "clientPhone",

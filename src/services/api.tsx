@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { Policy } from '@/data';
 const BASE_URL = "https://insurance-backend-el66.onrender.com/api";
 
 
@@ -11,12 +10,12 @@ export const policyApi = {
 
    
 
-    createPolicy: async (policy: Policy) => {
+    createPolicy: async (policy: any) => {
         const { data } = await axios.post(`${BASE_URL}/policies`, policy);
         return data;
     },
 
-    updatePolicy: async (id: string, policy: Policy) => {
+    updatePolicy: async (id: number, policy: any) => {
         const { data } = await axios.put(`${BASE_URL}/policies/${id}`, policy);
         return data;
     },

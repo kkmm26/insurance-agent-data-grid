@@ -1,11 +1,3 @@
-import { MoreHorizontal } from "lucide-react";
-import { Button } from "./ui/button";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
 import NewPolicyForm from "./NewPolicyForm";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
@@ -68,7 +60,9 @@ function DeleteAction({ row }: { row: any }) {
         },
         onSuccess: () => {
             toast("Policy deleted successfully");
-            location.reload();
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
         },
         onError: () => {
             toast("Something went wrong");
