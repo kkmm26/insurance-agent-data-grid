@@ -5,13 +5,15 @@ import PolicyStatusFilter from "./PolicyStatusFilter";
 import ColumnsVisibility from "./ColumnsVisibility";
 import { Table } from "@tanstack/react-table";
 import FacetedFilters from "./FacetedFilters";
+import { useLanguage } from "@/providers/LanguageProvider";
 
 function FilterControlsRow<TData>({ table }: { table: Table<TData> }) {
+    const { translations } = useLanguage();
     return (
         <div className="flex justify-between mb-6 overflow-x-auto">
             <div className="flex space-x-2">
                 <Input
-                    placeholder="Search Client Names"
+                    placeholder={translations['search-client-names']}
                     value={
                         (table
                             .getColumn("clientName")

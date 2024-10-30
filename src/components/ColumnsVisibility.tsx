@@ -6,17 +6,19 @@ import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
 import { Table } from "@tanstack/react-table";
 import { COLUMNS } from "@/data";
+import { useLanguage } from "@/providers/LanguageProvider";
 
 type ColumnsVisibilityProps<TData> = {
     table: Table<TData>;
 };
 
 function ColumnsVisibility<TData>({ table }: ColumnsVisibilityProps<TData>) {
+    const { translations } = useLanguage();
     return (
         <Popover>
             <PopoverTrigger>
                 <Button variant="outline">
-                    <SlidersHorizontal className="h-4 w-4" /> Columns
+                    <SlidersHorizontal className="h-4 w-4" /> {translations['columns']}
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="space-y-4 w-fit p-4">

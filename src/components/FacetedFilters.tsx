@@ -10,6 +10,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Filter } from "lucide-react";
 import { policyTypes, companyNames } from "@/data"; // Import types from data.ts
 import { Column } from "@tanstack/react-table";
+import { useLanguage } from "@/providers/LanguageProvider";
 
 const filterOptions = {
     policyType: policyTypes,
@@ -51,18 +52,19 @@ function FacetedFilters<TData, TValue>({
             companyName: [],
         }));
     };
+    const { translations } = useLanguage();
     return (
         <Popover>
             <PopoverTrigger asChild>
                 <Button variant="outline">
                     <Filter className="mr-2 h-4 w-4" />
-                    Filter
+                    {translations['filter']}
                 </Button>
             </PopoverTrigger>
             <PopoverContent>
                 <div className="grid grid-cols-2 gap-4 p-2">
                     <div>
-                        <h3 className="mb-2 font-semibold">Type</h3>
+                        <h3 className="mb-2 font-semibold">{translations['policy-type']}</h3>
                         <ScrollArea className="h-[180px] w-[120px] pt-2 border-r-[1px]">
                             {filterOptions.policyType.map((option) => {
                                 return (
@@ -96,7 +98,7 @@ function FacetedFilters<TData, TValue>({
                         </ScrollArea>
                     </div>
                     <div>
-                        <h3 className="mb-2 font-semibold">Company Name</h3>
+                        <h3 className="mb-2 font-semibold">{translations['company-name']}</h3>
                         <ScrollArea className="h-[180px] w-[120px] pt-2">
                             {filterOptions.companyName.map((option) => (
                                 <div
@@ -130,7 +132,7 @@ function FacetedFilters<TData, TValue>({
                 </div>
                 <div className="flex items-center justify-center pt-2 border-t">
                     <Button variant="outline" onClick={resetFilters}>
-                        Reset All
+                        {translations['reset-all']}
                     </Button>
                 </div>
             </PopoverContent>

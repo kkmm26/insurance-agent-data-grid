@@ -9,6 +9,7 @@ import {
 } from "./ui/dropdown-menu";
 import { useState } from "react";
 import { Column } from "@tanstack/react-table";
+import { useLanguage } from "@/providers/LanguageProvider";
 
 const policyStatusOptions = ["Active", "Expired", "All"];
 
@@ -20,7 +21,7 @@ function PolicyStatusFilter<TData, TValue>({
     column,
 }: PolicyStatusFilterProps<TData, TValue>) {
     const [policyStatus, setPolicyStatus] = useState<string>("All");
-
+    const { translations } = useLanguage();
     const handleItemClicked = (option: string) => {
         setPolicyStatus(option);
         column?.setFilterValue(option === "All" ? undefined : option);
@@ -30,7 +31,7 @@ function PolicyStatusFilter<TData, TValue>({
         <DropdownMenu>
             <DropdownMenuTrigger>
                 <Button variant="outline">
-                    <ChevronDown className="h-4 w-4" /> Policy Status:
+                    <ChevronDown className="h-4 w-4" /> {translations['policy-status']}:
                     {policyStatus === "Active" && (
                         <span className="font-bold text-green-500">Active</span>
                     )}

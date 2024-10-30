@@ -11,6 +11,8 @@ import NewPolicyForm from "./components/NewPolicyForm";
 import { Toaster } from "./components/ui/sonner";
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import LanguageToggle from "./components/LanguageToggle";
+import { useLanguage } from "./providers/LanguageProvider";
 
 
 export default function Dashboard() {
@@ -20,26 +22,30 @@ export default function Dashboard() {
     function closeDialog() {
         setOpen(false);
     }
+
+    const { translations } = useLanguage();
     return (
         <QueryClientProvider client={queryClient}>
-            <TableProvider>
+                <TableProvider>
                 <PolicyStartDateProvider>
                 <div className="container mx-auto p-4">
                     <div className="flex justify-between items-center mb-8">
-                        <TotalCommision />
-
+                        <div className="flex gap-4 items-center">
+                            <TotalCommision />
+                        </div>
+                        <div className="flex items-end gap-4 flex-col justify-end">
+                            <LanguageToggle />
                             <Dialog open={open} onOpenChange={setOpen}>
                                 <DialogTrigger asChild>
-                                    <Button>Add New Policy</Button>
+                                    <Button>{translations['add-policy']}</Button>
                                 </DialogTrigger>
                                 <DialogContent className="min-w-[90%]">
                                     <NewPolicyForm closeDialog={closeDialog} />
                                 </DialogContent>
                             </Dialog>
                         </div>
-
-                        <DateFilterRow />
-
+                    </div>
+                    <DateFilterRow />
                     <PolicyTable />
                 </div>
             </PolicyStartDateProvider>

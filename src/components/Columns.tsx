@@ -17,6 +17,7 @@ import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "./ui/checkbox";
 import RowActions from "./RowActions";
 
+
 export const columns: ColumnDef<Policy>[] = [
     {
         id: "select",
@@ -47,7 +48,7 @@ export const columns: ColumnDef<Policy>[] = [
     },
     {
         accessorKey: "id",
-        header: "No",
+        header: 'No',
         enableHiding: false,
         enableSorting: false,
         cell: ({ row }) => {
@@ -57,6 +58,7 @@ export const columns: ColumnDef<Policy>[] = [
     {
         accessorKey: "clientName",
         header: "Client Name",
+    
     },
     {
         accessorKey: "clientPhone",

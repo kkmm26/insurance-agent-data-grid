@@ -10,6 +10,7 @@ import { DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { Column } from "@tanstack/react-table";
+import { useLanguage } from "@/providers/LanguageProvider";
 
 const commissionStatusOptions = ["Pending", "Paid", "All"];
 
@@ -26,13 +27,13 @@ function CommissionStatusFilter<TData, TValue>({
         setCommissionStatus(option);
         column?.setFilterValue(option === "All" ? undefined : option);
     };
-
+    const { translations } = useLanguage();
     return (
         <div>
             <DropdownMenu>
                 <DropdownMenuTrigger>
                     <Button variant="outline">
-                        <ChevronDown className="h-4 w-4" /> Commission Status:{" "}
+                        <ChevronDown className="h-4 w-4" /> {translations['commission-status']}:{" "}
                         {commissionStatus === "All" && (
                             <span className="font-bold text-blue-500">All</span>
                         )}

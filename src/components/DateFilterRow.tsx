@@ -2,12 +2,13 @@ import { Button } from "./ui/button";
 import DateRangePicker from "./DateRangePicker";
 import { useContext } from "react";
 import { PolicyStartDateContext } from "@/providers/PolicyStartDateProvider";
+import { useLanguage } from "@/providers/LanguageProvider";
 
 
 
 function DateFilterRow() {
     const {toCurrentMonth, toCurrentYear} = useContext(PolicyStartDateContext);
-    
+    const { translations } = useLanguage();
 
     
     return (
@@ -15,10 +16,10 @@ function DateFilterRow() {
             <DateRangePicker />
             <div className="space-x-2 flex">
                 <Button onClick={() => {toCurrentYear()}} variant="outline">
-                    This Year
+                    {translations['this-year']}
                 </Button>
                 <Button onClick={() => {toCurrentMonth()}} variant="outline">
-                    This Month
+                    {translations['this-month']}
                 </Button>
             </div>
         </div>

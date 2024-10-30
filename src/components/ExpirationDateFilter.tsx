@@ -8,6 +8,7 @@ import {
 } from "./ui/dropdown-menu";
 import { useState } from "react";
 import { Column } from "@tanstack/react-table";
+import { useLanguage } from "@/providers/LanguageProvider";
 
 const options = [
     {
@@ -41,12 +42,12 @@ function ExpirationDateFilter<TData, TValue>({
         setExpirationDate(option);
         column?.setFilterValue(option === "All" ? undefined : option);
     };
-
+    const { translations } = useLanguage();
     return (
         <DropdownMenu>
             <DropdownMenuTrigger>
                 <Button variant="outline">
-                    <ChevronDown className="h-4 w-4" /> Expired Within:{" "}
+                    <ChevronDown className="h-4 w-4" /> {translations['expired-within']}:{" "}
                     {expirationDate === "Expired" && (
                         <span className="font-bold text-slate-500">
                             Expired
