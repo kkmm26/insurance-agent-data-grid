@@ -3,7 +3,7 @@
 ## Overview
 
 A data grid with user-friendly interface for insurance agents to manage policy and client data. The app allows for data to be easily entered, filtered, and displayed, with efficient querying and validation processes. It includes features such as searching clients, filtering policies by date and adding new policies through a dialog form. The application supports english and burmese languages.
-![Screenshot 2024-10-31 121634](https://github.com/user-attachments/assets/7b004a27-5ab0-4a8f-9776-1a71541fe555)
+![Screenshot 2024-10-31 122544](https://github.com/user-attachments/assets/411448bc-b19b-4441-b210-b8c8b971a5a2)
 
 ## Features
 
